@@ -11,11 +11,11 @@ function App() {
 
   return (
     <div className="App">
-      <Header IsLoggedIn={IsLoggedIn} />
+      <Header />
         <Main />
       <Footer />
     </div>
   )
 }
 
-export default App;
+export default App

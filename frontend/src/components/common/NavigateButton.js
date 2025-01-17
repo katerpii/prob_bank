@@ -1,13 +1,13 @@
 import { useNavigate } from 'react-router-dom'
 import { Button } from 'react-bootstrap'
 
-export default function CustomButton({page, name}) {
+export default function NavigateButton({page, ButtonName, state}) {
     const navigate = useNavigate()
-    const navigateTo = () => {
-        navigate(page)
+    const navigatePage = () => {
+        navigate(page, { state: state })
     }
     
     return (
-        <Button onClick={navigateTo}> {name} </Button>
+        <Button onClick={navigatePage}> {ButtonName} </Button>
     )
 }

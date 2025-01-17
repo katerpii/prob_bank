@@ -1,6 +1,6 @@
 import React from 'react'
 import { Container, Row, Col } from 'react-bootstrap'
-import UserInfo from '../components/profile/UserInfo'
+import UserProfile from '../components/profile/UserProfile'
 
 export default function Main() {
     return (
@@ -13,7 +13,7 @@ export default function Main() {
                 >
                 {/* 왼쪽 콘텐츠 */}
                 왼쪽 영역
-                <UserInfo />
+                <UserProfile />
                 Test
                 </Col>
                 {/* 오른쪽 열 */}

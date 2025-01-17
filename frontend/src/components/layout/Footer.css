@@ -1,5 +1,10 @@
-.Footer {
-    background-color: beige;
+.footer {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    background-color: #D8D8D8;
+    padding: 20px 0;
 }
 
 .hr {

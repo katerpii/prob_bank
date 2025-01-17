@@ -9,8 +9,8 @@ export default function LoginPage() {
     const navigate = useNavigate()
 
     const [user, setUser] = useState({
-        username: '',
-        password: '',
+        email: '',
+        password: ''
     })
 
     const handleChange = (e) => {
@@ -22,18 +22,18 @@ export default function LoginPage() {
         e.preventDefault()
         try {
             const formData = new FormData()
-            formData.append('username', user.username)
+            formData.append('email', user.email)
             formData.append('password', user.password)
 
             const response = await axios({
-                url: 'http://localhost:8000/loginProc',
+                url: 'http://localhost:3030/loginProc',
                 method: 'POST',
                 data: formData,
-                withCredentials: true,
+                withCredentials: true
             })
             if (response.status === 200) {
                 alert('로그인 성공!')
-                console.log('username: ' + response.data.username)
+                console.log('email: ' + response.data.email)
                 console.log('권한: ' + response.data.authorities)
                 navigate("/", { state: { userData: response.data } })
             }
@@ -47,26 +47,26 @@ export default function LoginPage() {
         <>
         <Header />
             <Container>
-                <div className="LoginBox">
-                    <div className="LoginBoxHeader">
-                        <h2> Login </h2>
+                <div className="login-box">
+                    <div className="Login-box-header">
+                        <h2> 로그인 </h2>
                     </div>
                     <form onSubmit={handleSubmit}>
-                        <div className="Input">
-                            <input type="text" name="username" placeholder="username" value={user.username} onChange={handleChange}></input>
-                            <div className="Indicator"></div>
+                        <div className="input">
+                            <input type="text" name="email" placeholder="이메일을 입력해 주세요." value={user.username} onChange={handleChange}/>
+                            <div className="indicator"></div>
                         </div>
-                        <div className="Input">
-                            <input type="password" name="password" placeholder="password" value={user.password} onChange={handleChange}></input>
-                            <div className="Indicator"></div>
+                        <div className="input">
+                            <input type="password" name="password" placeholder="비밀번호를 입력해 주세요." value={user.password} onChange={handleChange}/>
+                            <div className="indicator"></div>
                         </div>
-                        <Button type="submit"> Sign-In </Button>
+                        <Button type="submit"> 로그인 </Button>
                     </form>
                 </div>
                 <hr />
-                <div className="SignUpBtton">
+                <div className="login-btton">
                     <Link to="/register">
-                        <Button> Sign-Up </Button>
+                        <Button> 회원 가입 </Button>
                     </Link>
                 </div>
             </Container>

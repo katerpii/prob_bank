@@ -1,37 +1,36 @@
-import React from 'react'
 import { Link } from 'react-router-dom'
 import NavigateButton from '../common/NavigateButton'
-import UserInfo from '../profile/UserInfo'
+import UserInfo from '../profile/UserProfile'
 import './Header.css'
 
 export default function Header(IsLoggedIn) {
     return (
         <>
             <nav className="navbar">
-                <div className="navInner">
-                    <ul className="navLeft">
+                <div className="nav-inner">
+                    <ul className="nav-left">
                         <Link to="/"> Home </Link>
                     </ul>
-                    <ul className="navMiddle">
-                        <li className="navItem"><Link to="/wargame"> WarGame </Link></li>
-                        <li className="navItem"><Link to="/algorithm"> Algorithm </Link></li>
-                        <li className="navItem"><Link to="/write-up"> WriteUp </Link></li>
-                        <li className="navItem"><Link to="/community"> Community </Link></li>
-                        <li className="navItem"><Link to="/ranking"> Ranking </Link></li>
+                    <ul className="nav-middle">
+                        <li className="nav-item"><Link to="/wargame"> 워게임 </Link></li>
+                        <li className="nav-item"><Link to="/algorithm"> 알고리즘 </Link></li>
+                        <li className="nav-item"><Link to="/write-up"> Write-up </Link></li>
+                        <li className="nav-item"><Link to="/community"> 커뮤니티 </Link></li>
+                        <li className="nav-item"><Link to="/ranking"> 랭킹 </Link></li>
                     </ul>
-                    <ul className="navRight">
-                        <li className="navItem">
-                            <Link to="#"> Search </Link>
+                    <ul className="nav-right">
+                        <li className="nav-item">
+                            <Link to="#"> 검색 </Link>
                         </li>
-                        <div className="navItem">
+                        <div className="nav-item">
                             <li>
                                 <Link to="#">
-                                    <div className="notificationIcon">
+                                    <div className="notification-icon">
                                     </div>
                                 </Link>
                             </li>
                         </div>
-                        { IsLoggedIn ? <NavigateButton page="/login" name="Login" /> : <UserInfo /> }
+                        { IsLoggedIn ? <NavigateButton page="/login" ButtonName="로그인" /> : <UserInfo /> }
                     </ul>
                 </div>
             </nav>
