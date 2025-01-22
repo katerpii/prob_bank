@@ -1,0 +1,71 @@
+.writeup-index {
+    padding: 20px 0;
+}
+
+.writeup-banner {
+    background-color: #fff;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.writeup-posts {
+    padding: 20px;
+}
+
+.header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+}
+
+.title {
+    font-size: 24px;
+    font-weight: bold;
+}
+
+.search {
+    margin-bottom: 20px;
+}
+
+.search input {
+    width: 100%;
+    padding: 8px 12px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+}
+
+.post-table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+.post-table-th {
+    padding: 12px;
+    background-color: #f8f9fa;
+    border-bottom: 2px solid #dee2e6;
+    font-weight: 600;
+}
+
+.post-table-row {
+    border-bottom: 1px solid #dee2e6;
+}
+
+.post-table-row td {
+    padding: 12px;
+}
+
+.post-title a {
+    color: #333;
+    text-decoration: none;
+}
+
+.post-title a:hover {
+    color: #007bff;
+}
+
+.col-title { width: 45%; }
+.col-author { width: 15%; }
+.col-hitcount { width: 10%; }
+.col-view { width: 10%; }
+.col-created { width: 20%; }
