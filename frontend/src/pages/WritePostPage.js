@@ -14,6 +14,7 @@ export default function WritePostPage() {
     const [post, setPost] = useState({
         title: '',
         content: '',
+        author: '',
         boardName: boardName
     })
 
@@ -25,7 +26,7 @@ export default function WritePostPage() {
     const handleSubmit = async (e) => {
         e.preventDefault()
         try {
-            await axios.post('http://localhost:3030/posts', post)
+            await axios.post('http://localhost:3030/addpost', post)
             alert('게시글이 작성되었습니다!')
             navigate(prevPath)
         } catch (error) {
