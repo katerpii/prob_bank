@@ -1,6 +1,6 @@
 package com.example.backend.repository;
 import org.springframework.data.jpa.repository.JpaRepository;
-import com.example.backend.user.User;
+import com.example.backend.entity.User;
 
 // DB와 상호작용하는 기능적 method들을 정의 (public interface) (CLUD)
 // findByUserEmail은 DB에서 이메일 정보를 기반으로 유저 정보를 찾아냄 

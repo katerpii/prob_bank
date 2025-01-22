@@ -1,5 +1,6 @@
-package com.example.backend.user.controller;
-import com.example.backend.user.*;
+package com.example.backend.controller;
+
+import com.example.backend.entity.*;
 import com.example.backend.service.*;
 
 import org.springframework.http.ResponseEntity;

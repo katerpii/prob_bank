@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useState,useEffect } from 'react'
 import { Button, Col, Row } from 'react-bootstrap'
 import axios from 'axios'
 import { useNavigate, useLocation } from 'react-router-dom'
@@ -27,13 +27,34 @@ export default function WritePostPage() {
         e.preventDefault()
         try {
             await axios.post('http://localhost:3030/addpost', post)
-            alert('게시글이 작성되었습니다!')
+            alert('성공했슴')
             navigate(prevPath)
         } catch (error) {
             alert('게시글 작성에 실패했습니다.')
             console.error(error)
         }
     }
+
+    // 작성자 정보 가져오기 (백엔드 호출)
+    useEffect(() => {
+        const fetchAuthorEmail = async () => {
+            try {
+                const response = await axios.get('http://localhost:3030/user',{withCredentials:true,}); // 사용자 정보 요청
+                
+                if (response.status === 200) {
+                    const { userEmail } = response.data; // 백엔드에서 반환된 user 객체의 email
+                    alert(JSON.stringify(response.data));
+                    setPost((prevPost) => ({
+                        ...prevPost,
+                        author: userEmail // 작성자 정보를 post 상태에 반영
+                    }));
+                }
+            } catch (error) {
+                alert(error);
+            }
+        }
+        fetchAuthorEmail();
+    },[]);
 
     return (
         <>

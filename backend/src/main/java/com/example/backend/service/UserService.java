@@ -3,7 +3,7 @@ package com.example.backend.service;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
-import com.example.backend.user.*;
+import com.example.backend.entity.*;
 import com.example.backend.repository.*;
 
 import lombok.RequiredArgsConstructor;

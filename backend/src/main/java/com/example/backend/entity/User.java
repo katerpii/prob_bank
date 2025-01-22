@@ -1,4 +1,4 @@
-package com.example.backend.user;
+package com.example.backend.entity;
 
 import java.sql.Timestamp;
 
@@ -28,7 +28,7 @@ public class User {
     private String username;
     private String password;
 
-    @Column(unique = true)
+    @Column(name="user_email",unique = true,nullable = false)
     private String userEmail;
 
     private String role; // ROLE_USER, ROLE_ADMIN

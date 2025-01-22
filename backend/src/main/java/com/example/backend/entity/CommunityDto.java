@@ -1,6 +1,7 @@
 package com.example.backend.entity;
 
-import lombok.Data;
+import com.example.backend.entity.*;
+import lombok.*;
 import jakarta.persistence.*;
 import java.time.LocalDateTime;
 
@@ -20,7 +21,8 @@ public class CommunityDto {
     @Column(nullable = false, columnDefinition = "TEXT")
     private String content;
 
-    @Column(nullable =false,length=255)
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "author",referencedColumnName = "user_email",nullable = false)
     private String author;
 
     @Column(name="user_id")
@@ -31,6 +33,4 @@ public class CommunityDto {
 
     @Column(name = "updated_date")
     private LocalDateTime updated_date;
-
-
 }
