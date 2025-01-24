@@ -1,10 +1,11 @@
 import { useState,useEffect } from 'react'
-import { Button, Col, Row } from 'react-bootstrap'
+import { Button, Container, Card, Form } from 'react-bootstrap'
 import axios from 'axios'
 import { useNavigate, useLocation } from 'react-router-dom'
-import NavigateButton from '../components/common/NavigateButton'
 import UserProfile from '../components/profile/UserProfile'
 import '../styles/WritePostPage.css'
+import Header from '../components/layout/Header'
+import Footer from '../components/layout/Footer'
 
 export default function WritePostPage() {
     const navigate = useNavigate()
@@ -27,7 +28,7 @@ export default function WritePostPage() {
         e.preventDefault()
         try {
             await axios.post('http://localhost:3030/addpost', post)
-            alert('성공했슴')
+            alert('게시글이 작성되었습니다!')
             navigate(prevPath)
         } catch (error) {
             alert('게시글 작성에 실패했습니다.')
@@ -58,50 +59,59 @@ export default function WritePostPage() {
 
     return (
         <>
-            <div className="fixed-header">
-                <div className="container">
-                    <NavigateButton page={prevPath} ButtonName={boardName}/>
-                    {/* <span>{boardName}</span> */}
-                </div>
-            </div>
-            <div className="main">
-                <div className="container">
-                    <form className="write-post-form" onSubmit={handleSubmit}>
-                        <Row>
-                            <Col lg={12} className="col-lg-8">
-                                <div className="write-post-new-column forum-padding">
-                                    <div>
-                                        <div className="title"> 제목을 입력해 주세요. </div>
-                                        <div className="input">
-                                            <input size={1} name="title" value={post.title} onChange={handleChange} className="input-element"/>
-                                        </div>
-                                        <div className="indicator"></div>
-                                    </div>
-                                    <div>
-                                        <div className="title"> 내용을 입력해 주세요. </div>
-                                        <input className="input" name="content" value={post.content} onChange={handleChange} style={{height: "400px"}}/>
-                                    </div>
-                                </div>
-                            </Col>
-                            <Col lg={12} className="col-lg-4">
-                                <div className="abstract-post-new-column forum-padding">
-                                    <div className="profile">
-                                        <div className="profile-header-wrapper">
-                                            <div className="profile-title"> 작성자 정보 </div>
-                                        </div>
-                                        <UserProfile />
-                                    </div>
-                                </div>
-                            </Col>
-                        </Row>
-                        <div className="button-wrapper">
-                            <Button type="submit">
+            <Header />
+            <Container className="py-5">
+                <Card className="p-4">
+                    <h2 className="mb-4">{boardName} 글쓰기</h2>
+                    <Form onSubmit={handleSubmit}>
+                        <Form.Group className="mb-3">
+                            <Form.Label>제목</Form.Label>
+                            <Form.Control
+                                type="text"
+                                name="title"
+                                value={post.title}
+                                onChange={handleChange}
+                                required
+                                placeholder="제목을 입력해 주세요"
+                            />
+                        </Form.Group>
+
+                        <Form.Group className="mb-3">
+                            <Form.Label>내용</Form.Label>
+                            <Form.Control
+                                as="textarea"
+                                name="content"
+                                value={post.content}
+                                onChange={handleChange}
+                                required
+                                rows={10}
+                                placeholder="내용을 입력해 주세요"
+                            />
+                        </Form.Group>
+
+                        <Form.Group className="mb-4">
+                            <Form.Label>작성자 정보</Form.Label>
+                            <UserProfile />
+                        </Form.Group>
+
+                        <div className="d-flex justify-content-end gap-2">
+                            <Button 
+                                variant="secondary" 
+                                onClick={() => navigate(prevPath)}
+                            >
+                                취소
+                            </Button>
+                            <Button 
+                                variant="primary" 
+                                type="submit"
+                            >
                                 작성
                             </Button>
                         </div>
-                    </form>
-                </div>
-            </div>
+                    </Form>
+                </Card>
+            </Container>
+            <Footer />
         </>
     )
 }

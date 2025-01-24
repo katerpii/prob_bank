@@ -19,7 +19,7 @@ const formatDate = (dateString) => {
 
 export default function CommunityPage() {
     const [posts, setPosts] = useState([{
-        id: '',
+        board_id: '',
         title: '',
         author: '',
         likeCount: 0,
@@ -87,7 +87,7 @@ export default function CommunityPage() {
                                         {posts.map((post) => (
                                             <tr key={post.id} className="post-table-row">
                                                 <td className="post-title">
-                                                    <Link to={`/community/posts/${post.id}-${post.title}`}>{post.title}</Link>
+                                                    <Link to={`/community/posts/${post.board_id}-${post.title}`}>{post.title}</Link>
                                                 </td>
                                                 <td className="post-author d-none d-lg-table-cell">{post.author}</td>
                                                 <td className="text-center">{post.likeCount}</td>
