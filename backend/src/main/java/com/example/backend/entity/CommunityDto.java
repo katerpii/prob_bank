@@ -1,13 +1,16 @@
 package com.example.backend.entity;
 
 import com.example.backend.entity.*;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+
 import lombok.*;
 import jakarta.persistence.*;
 import java.time.LocalDateTime;
 
 @Data
 @Entity
-@Table(name="board")    
+@Table(name="board")
+
 public class CommunityDto {
 
     @Id
@@ -23,7 +26,8 @@ public class CommunityDto {
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "author",referencedColumnName = "user_email",nullable = false)
-    private String author;
+    @JsonIgnoreProperties({"no", "createDate","password","role","username"})
+    private User author;
 
     @Column(name="user_id")
     private Integer user_id;

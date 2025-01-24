@@ -29,7 +29,7 @@ public class User {
     private String password;
 
     @Column(name="user_email",unique = true,nullable = false)
-    private String userEmail;
+    private String useremail;
 
     private String role; // ROLE_USER, ROLE_ADMIN
 

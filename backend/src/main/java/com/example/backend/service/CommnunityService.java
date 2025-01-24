@@ -1,7 +1,5 @@
 package com.example.backend.service;
 
-import org.springframework.stereotype.Service;
-
 import com.example.backend.entity.CommunityDto;
 import com.example.backend.entity.User;
 import com.example.backend.exception.UnauthorizedAccessException;
@@ -9,6 +7,8 @@ import com.example.backend.repository.CommunityRepository;
 import com.example.backend.config.auth.UserDetailService;
 import com.example.backend.repository.UserRepository;
 
+import java.util.List;
+import org.springframework.stereotype.Service;
 import jakarta.persistence.EntityNotFoundException;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
@@ -20,6 +20,12 @@ public class CommnunityService {
     private final CommunityRepository communityRepository;
     private final UserDetailService userDetailService;
     private final UserRepository userRepository;
+
+
+    // 게시글 조회(전체) api
+    public List<CommunityDto> getAllPost(){
+        return communityRepository.findAll();  
+    }
     // 게시글 추가 api
     public CommunityDto addPost(CommunityDto post){
         return communityRepository.save(post);
@@ -27,7 +33,7 @@ public class CommnunityService {
     // 게시글 삭제 api
     @Transactional
     public void deletePost(Integer board_id) {
-        // 글 조회
+        // 글조회회
         String currentUsername=userDetailService.getCurrentUsername();
         CommunityDto post = communityRepository.findById(board_id)
                 .orElseThrow(() -> new EntityNotFoundException("Post not found"));
