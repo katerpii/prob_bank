@@ -25,7 +25,7 @@ public class UserService {
     }
 
     public User getUserInfo(String email){
-        User user = userRepository.findByUseremail(email);
+        User user = userRepository.findByUserEmail(email);
         return user;
     }
 }

@@ -24,11 +24,11 @@ public class CommunityDto {
     @Column(nullable = false, columnDefinition = "TEXT")
     private String content;
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "author",referencedColumnName = "user_email",nullable = false)
-    @JsonIgnoreProperties({"no", "createDate","password","role","username"})
-    private User author;
-
+    // @ManyToOne(fetch = FetchType.LAZY)
+    // @JoinColumn(name = "author",referencedColumnName = "user_email",nullable = false)
+    @Column(name="author",length = 255)
+    private String author;
+    
     @Column(name="user_id")
     private Integer user_id;
 

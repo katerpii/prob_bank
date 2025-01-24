@@ -29,8 +29,8 @@ public class User {
     private String password;
 
     @Column(name="user_email",unique = true,nullable = false)
-    private String useremail;
-
+    private String userEmail;
+    
     private String role; // ROLE_USER, ROLE_ADMIN
 
     @CreationTimestamp

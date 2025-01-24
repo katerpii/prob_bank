@@ -19,9 +19,7 @@ public class CommnunityService {
 
     private final CommunityRepository communityRepository;
     private final UserDetailService userDetailService;
-    private final UserRepository userRepository;
-
-
+    
     // 게시글 조회(전체) api
     public List<CommunityDto> getAllPost(){
         return communityRepository.findAll();  
@@ -33,7 +31,7 @@ public class CommnunityService {
     // 게시글 삭제 api
     @Transactional
     public void deletePost(Integer board_id) {
-        // 글조회회
+        // 글조회
         String currentUsername=userDetailService.getCurrentUsername();
         CommunityDto post = communityRepository.findById(board_id)
                 .orElseThrow(() -> new EntityNotFoundException("Post not found"));
