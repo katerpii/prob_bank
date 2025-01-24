@@ -1,0 +1,44 @@
+.split {
+    display: flex;
+    align-items: center; /* 세로 가운데 정렬 */
+    justify-content: space-between; /* 양쪽 끝에 요소 배치 */
+}
+
+.headers {
+    display: flex;
+    align-items: center; /* 세로 가운데 정렬 */
+    justify-content: space-between; /* 양쪽 끝에 요소 배치 */
+}
+
+.create-challenge {
+    border: 1px solid #e0e0e0;
+    border-radius: 6px;
+    padding: 12px 15px;
+    margin: 15px;
+    width: fit-content;
+}
+
+.promoto-title {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    text-align: left;
+    gap: 12px;
+}
+
+.promoto-title span {
+    font-size: 0.9rem;
+    line-height: 1.3;
+    color: #555555;
+}
+
+.promoto-title a {
+    color: #0066cc;
+    text-decoration: none;
+    font-size: 0.85rem;
+    margin-top: 3px;
+}
+
+.promoto-title a:hover {
+    text-decoration: underline;
+}
