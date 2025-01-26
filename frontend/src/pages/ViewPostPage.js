@@ -19,10 +19,12 @@ const formatDate = (dateString) => {
 
 export default function ViewPostPage () {
     const { idAndTitle } = useParams()
-    const postId = idAndTitle.split('-')[0]
+    console.log('idAndTitle:', idAndTitle) // 디버깅용
+
+    const postId = idAndTitle?.split('-')[0] || ''    
     
     const [post, setPost] = useState({
-        id: '',
+        post_id: 0,
         title: '',
         content: '',
         author: '',
@@ -32,7 +34,7 @@ export default function ViewPostPage () {
     })
 
     useEffect(() => {
-        axios.get(`/post/${postId}`)
+        axios.get(`http://localhost/post/${postId}`)
             .then(res => setPost(res.data))
             .catch(error => console.log(error))
     }, [postId])

@@ -1,27 +1,27 @@
 import { useState, useEffect } from "react"
 import { Button, Col, Row } from "react-bootstrap"
-import ChallengeRow from "../components/challenge/ChallengeRow";
+import ChallengeRow from "../components/challenge/ChallengeRow"
+import { Link } from "react-router-dom"
 import Footer from "../components/layout/Footer"
 import Header from "../components/layout/Header"
 import "../styles/AlgorithmListPage.css"
-import { Link } from "react-router-dom";
 
 export default function AlgorithmListPage() {
-    const [problems, setProblems] = useState([])
-    const [totalProblems, setTotalProblems] = useState(0)
+    const [challenges, setChallenges] = useState([])
+    const [totalChallenges, setTotalChallenges] = useState(0)
 
     useEffect(() => {
         // API 호출 예시
         const fetchProblems = async () => {
             try {
-                const response = await fetch('http://localhost:3030/getlist')
+                const response = await fetch('http://localhost:3030/algorithm/challenge/list')
                 const data = await response.json()
-                setProblems(data.problems)
-                setTotalProblems(data.total)
+                setChallenges(data.challenge)
+                setTotalChallenges(data.challenge.length) // 총 개수를 totalchallenges에 설정
             } catch (error) {
                 console.error('문제 목록을 불러오는데 실패했습니다:', error)
             }
-        };
+        }
 
         fetchProblems()
     }, [])
@@ -49,7 +49,7 @@ export default function AlgorithmListPage() {
                                 <h3 style={{ fontSize: '1rem' }}>
                                     <span>총 
                                         <span className="total-problem-amount">
-                                            <span>{totalProblems}</span>
+                                            <span>{totalChallenges}</span>
                                         </span>
                                         개의 문제가 있습니다.
                                     </span>
@@ -66,8 +66,8 @@ export default function AlgorithmListPage() {
                                     <div className="list-header"> 풀이 수 </div>
                                     <div className="list-header"> 출제자 </div>
                                 </div>
-                                {problems.map((problem) => (
-                                    <ChallengeRow key={problem.id} problem={problem} />
+                                {challenges.map((challenge) => (
+                                    <ChallengeRow key={challenge.id} problem={challenge} />
                                 ))}
                             </div>
                         </div>

@@ -19,7 +19,7 @@ const formatDate = (dateString) => {
 
 export default function CommunityPage() {
     const [posts, setPosts] = useState([{
-        board_id: '',
+        board_id: 0,
         title: '',
         author: '',
         likeCount: 0,
@@ -29,8 +29,8 @@ export default function CommunityPage() {
 
     // backend단에서 list 객체 가져오기
     useEffect(() => {
-        axios.get("/post/list") // get 요청 주소 (조정)
-            .then(res => setPosts(res.data.postList))
+        axios.get("http://localhost/community/post/list") // get 요청 주소 (조정)
+            .then(res => setPosts(res.data))
             .catch(error => console.log(error))
     }, [])
 
