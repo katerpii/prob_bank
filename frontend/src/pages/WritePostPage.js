@@ -1,11 +1,11 @@
 import { useState,useEffect } from 'react'
 import { Button, Container, Card, Form } from 'react-bootstrap'
-import axios from 'axios'
 import { useNavigate, useLocation } from 'react-router-dom'
+import axios from 'axios'
 import UserProfile from '../components/profile/UserProfile'
-import '../styles/WritePostPage.css'
 import Header from '../components/layout/Header'
 import Footer from '../components/layout/Footer'
+import '../styles/WritePostPage.css'
 
 export default function WritePostPage() {
     const navigate = useNavigate()
@@ -40,22 +40,22 @@ export default function WritePostPage() {
     useEffect(() => {
         const fetchAuthorEmail = async () => {
             try {
-                const response = await axios.get('http://localhost:3030/user',{withCredentials:true,}); // 사용자 정보 요청
+                const response = await axios.get('http://localhost:3030/user',{withCredentials:true,}) // 사용자 정보 요청
                 
                 if (response.status === 200) {
-                    const { userEmail } = response.data; // 백엔드에서 반환된 user 객체의 email
-                    alert(JSON.stringify(response.data));
+                    const { userEmail } = response.data // 백엔드에서 반환된 user 객체의 email
+                    // alert(JSON.stringify(response.data)); // Debug
                     setPost((prevPost) => ({
                         ...prevPost,
                         author: userEmail // 작성자 정보를 post 상태에 반영
-                    }));
+                    }))
                 }
             } catch (error) {
-                alert(error);
+                console.error(error)
             }
         }
-        fetchAuthorEmail();
-    },[]);
+        fetchAuthorEmail()
+    },[])
 
     return (
         <>

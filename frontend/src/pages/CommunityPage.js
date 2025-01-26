@@ -29,7 +29,7 @@ export default function CommunityPage() {
 
     // backend단에서 list 객체 가져오기
     useEffect(() => {
-        axios.get("http://localhost/community/post/list") // get 요청 주소 (조정)
+        axios.get('http://localhost/community/post/list') // get 요청 주소 (조정)
             .then(res => setPosts(res.data))
             .catch(error => console.log(error))
     }, [])

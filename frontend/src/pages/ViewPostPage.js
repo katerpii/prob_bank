@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from 'react'
 import { useParams } from 'react-router-dom'
 import axios from 'axios'
-import { Container, Row } from 'react-bootstrap'
 import Header from '../components/layout/Header'
 import Footer from '../components/layout/Footer'
 
@@ -42,7 +41,7 @@ export default function ViewPostPage () {
     return (
         <>
             <Header/>
-
+            
             <Footer/>
         </>
     )
