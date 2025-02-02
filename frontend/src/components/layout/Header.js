@@ -1,9 +1,13 @@
 import { Link } from 'react-router-dom'
 import NavigateButton from '../common/NavigateButton'
+import useAuthStore from '../../store/authStore'
+import useUserStore from '../../store/userStore'
 import UserInfo from '../profile/UserProfile'
 import './Header.css'
 
-export default function Header(IsLoggedIn) {
+export default function Header() {
+    const user = useAuthStore((state) => state.user)
+
     return (
         <>
             <nav className="navbar">
@@ -30,7 +34,7 @@ export default function Header(IsLoggedIn) {
                                 </Link>
                             </li>
                         </div>
-                        { IsLoggedIn ? <NavigateButton page="/login" ButtonName="로그인" /> : <UserInfo /> }
+                        { !user ? <NavigateButton page="/login" ButtonName="로그인" /> : <UserInfo /> }
                     </ul>
                 </div>
             </nav>

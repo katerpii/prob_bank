@@ -19,7 +19,7 @@ const formatDate = (dateString) => {
 
 export default function WriteUpPage() {
     const [posts, setPosts] = useState([{
-        id: '',
+        post_id: 0,
         title: '',
         author: '',
         likeCount: 0,
@@ -29,8 +29,8 @@ export default function WriteUpPage() {
 
     // backend단에서 list 객체 가져오기
     useEffect(() => {
-        axios.get("/post/list") // get 요청 주소 (조정)
-            .then(res => setPosts(res.data.postList))
+        axios.get("http://localhost/write-up/post/list") // get 요청 주소 (조정)
+            .then(res => setPosts(res.data))
             .catch(error => console.log(error))
     }, [])
 
@@ -85,9 +85,9 @@ export default function WriteUpPage() {
                                     </thead>
                                     <tbody>
                                         {posts.map((post) => (
-                                            <tr key={post.id} className="post-table-row">
+                                            <tr key={post.post_id} className="post-table-row">
                                                 <td className="post-title">
-                                                    <Link to={`/write-up/posts/${post.id}-${post.title}`}>{post.title}</Link>
+                                                    <Link to={`/write-up/posts/${post.post_id}-${post.title}`}>{post.title}</Link>
                                                 </td>
                                                 <td className="post-author d-none d-lg-table-cell">{post.author}</td>
                                                 <td className="text-center">{post.likeCount}</td>
