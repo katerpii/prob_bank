@@ -1,8 +1,8 @@
 import React from 'react'
-import { BrowserRouter, Routes, Route } from 'react-router-dom'
+import { Routes, Route } from 'react-router-dom'
 // import { MyPage, LoginPage, RegisterPage, CommunityPage, WargameListPage, AlgorithmListPage, WargameDetailPage, AlgorithmDetailPage, RankingPage } from '../pages'
-// * TODO 위 형식으로 import 할 수 있는 방법 찾기 ..
-import App from '../App'
+// * TODO 위 형식으로 import 할 수 있는 방법 찾기 .. -> 더 번거로워질 듯 ;
+import MainPage from '../pages/MainPage.js'
 import MyPage from '../pages/MyPage'
 import LoginPage from '../pages/LoginPage'
 import RegisterPage from '../pages/RegisterPage'
@@ -20,27 +20,40 @@ import NotFound from '../pages/404'  // 왜 이건 되는데
 
 export default function Router() { // path에 따른 Component 라우팅
     return (
-        <BrowserRouter>
-            <Routes>
-                <Route path="/" element={<App/>}/>
-                <Route path="/mypage" element={<MyPage/>}/>
-                <Route path="/login" element={<LoginPage/>}/>
-                <Route path="/register" element={<RegisterPage/>}/>
-                <Route path="/community" element={<CommunityPage/>}/>
-                <Route path="/community/posts/new" element={<WritePostPage/>}/>
-                <Route path="/community/posts/:idAndtitle" element={<ViewPostPage/>}/>
-                <Route path="/algorithm" element={<AlgorithmListPage/>}/>
-                <Route path="/algorithm/challenges/new" element={<CreateChallengePage/>}/>
-                <Route path="/algorithm/:idAndtitle" element={<AlgorithmDetailPage/>}/>
-                <Route path="/wargame" element={<WargameListPage/>}/>
-                <Route path="/wargame/challenges/new" element={<CreateChallengePage/>}/>
-                <Route path="/wargame/:idAndtitle" element={<WargameDetailPage/>}/>
-                <Route path="/write-up" element={<WriteUpPage/>}/>
-                <Route path="/write-up/posts/new" element={<WritePostPage/>}/>
-                <Route path="/write-up/posts/:idAndtitle" element={<ViewPostPage/>}/>
-                <Route path="/ranking" element={<RankingPage/>}/>
-                <Route path={"*"} element={<NotFound/>}/>  {/** 404 Error */}
-            </Routes>
-        </BrowserRouter>
+        <Routes>
+            {/* 메인 페이지 */}
+            <Route path="/" element={<MainPage />} />
+            
+            {/* 일반 페이지들 */}
+            <Route path="/mypage" element={<MyPage />} />
+            <Route path="/login" element={<LoginPage />} />
+            <Route path="/register" element={<RegisterPage />} />
+            
+            {/* Community 관련 */}
+            <Route path="/community" element={<CommunityPage />} />
+            <Route path="/community/posts/new" element={<WritePostPage />} />
+            <Route path="/community/posts/:idAndtitle" element={<ViewPostPage />} />
+            
+            {/* Algorithm */}
+            <Route path="/algorithm" element={<AlgorithmListPage />} />
+            <Route path="/algorithm/challenges/new" element={<CreateChallengePage />} />
+            <Route path="/algorithm/:idAndtitle" element={<AlgorithmDetailPage />} />
+            
+            {/* Wargame */}
+            <Route path="/wargame" element={<WargameListPage />} />
+            <Route path="/wargame/challenges/new" element={<CreateChallengePage />} />
+            <Route path="/wargame/:idAndtitle" element={<WargameDetailPage />} />
+            
+            {/* Write-up */}
+            <Route path="/write-up" element={<WriteUpPage />} />
+            <Route path="/write-up/posts/new" element={<WritePostPage />} />
+            <Route path="/write-up/posts/:idAndtitle" element={<ViewPostPage />} />
+            
+            {/* Ranking */}
+            <Route path="/ranking" element={<RankingPage />} />
+            
+            {/* 404 페이지 */}
+            <Route path="*" element={<NotFound />} />
+        </Routes>
     )
 }

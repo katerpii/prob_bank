@@ -4,11 +4,12 @@ import axios from 'axios'
 import useAuthStore from '../store/authStore'
 import useUserStore from '../store/userStore'
 import { Container, Button } from 'react-bootstrap'
-import Header from '../components/layout/Header'
-import Footer from '../components/layout/Footer'
 
 export default function LoginPage() {
+    // Navigate
     const navigate = useNavigate()
+
+    // Zustand를 통한 login state, user state 전역 관리
     const login = useAuthStore((state) => state.login)
     const updateProfile = useUserStore((state) => state.updateProfile)
 
@@ -17,11 +18,13 @@ export default function LoginPage() {
         password: ''
     })
 
+    // 입력창 변화
     const handleChange = (e) => {
         const { name, value } = e.target
         setUser({ ...user, [name]: value })
     }
 
+    // send POST login data to Backend
     const handleLogin = async (e) => {
         e.preventDefault()
         try {
@@ -36,6 +39,7 @@ export default function LoginPage() {
                 withCredentials: true
             })
             if (response.status === 200) {
+                // update state use zustand
                 login(response.data)
                 updateProfile(response.data)
                 alert('로그인 성공!')
@@ -45,13 +49,12 @@ export default function LoginPage() {
             }
         } catch (error) {
             alert('로그인 실패: ' + error.message)
-            console.log('로그인 에러: ', error)
+            // console.log('로그인 에러: ', error)
         }
     }
 
     return (
         <>
-        <Header />
             <Container>
                 <div className="login-box">
                     <div className="Login-box-header">
@@ -59,11 +62,11 @@ export default function LoginPage() {
                     </div>
                     <form onSubmit={handleLogin}>
                         <div className="input">
-                            <input type="text" name="email" placeholder="이메일을 입력해 주세요." value={user.username} onChange={handleChange}/>
+                            <input type="text" name="email" placeholder="이메일을 입력해 주세요." value={user.username} onChange={handleChange} />
                             <div className="indicator"></div>
                         </div>
                         <div className="input">
-                            <input type="password" name="password" placeholder="비밀번호를 입력해 주세요." value={user.password} onChange={handleChange}/>
+                            <input type="password" name="password" placeholder="비밀번호를 입력해 주세요." value={user.password} onChange={handleChange} />
                             <div className="indicator"></div>
                         </div>
                         <Button type="submit"> 로그인 </Button>
@@ -76,7 +79,6 @@ export default function LoginPage() {
                     </Link>
                 </div>
             </Container>
-        <Footer />
         </>
     )
 }

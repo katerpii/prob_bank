@@ -3,8 +3,6 @@ import axios from 'axios'
 import { Link } from 'react-router-dom'
 import { Container, Row } from 'react-bootstrap'
 import NavigateButton from '../components/common/NavigateButton'
-import Header from '../components/layout/Header'
-import Footer from '../components/layout/Footer'
 import '../styles/WriteUpPage.css'
 
 // 날짜 포맷팅 함수
@@ -13,7 +11,7 @@ const formatDate = (dateString) => {
     const year = date.getFullYear()
     const month = String(date.getMonth() + 1).padStart(2, '0')
     const day = String(date.getDate()).padStart(2, '0')
-    
+
     return `${year}.${month}.${day}`
 }
 
@@ -36,7 +34,6 @@ export default function WriteUpPage() {
 
     return (
         <>
-            <Header />
             <Container>
                 <Row>
                     <div className="writeup-index">
@@ -106,7 +103,6 @@ export default function WriteUpPage() {
                     </div>
                 </Row>
             </Container>
-            <Footer />
         </>
     )
 }
