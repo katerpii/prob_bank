@@ -14,6 +14,8 @@ import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -24,7 +26,7 @@ public class CommunityController {
     private final CommnunityService communityService;
 
     // 게시글 조회(전체글 보여주기)
-    @GetMapping("/community")
+    @GetMapping("community/post/list")
     public ResponseEntity<List<CommunityDto>> getAllPost(){
         List<CommunityDto> post= communityService.getAllPost();
         return ResponseEntity.ok(post);
@@ -37,7 +39,7 @@ public class CommunityController {
         return ResponseEntity.ok(savedPost); 
     }
     // 게시글 삭제 
-    @DeleteMapping("/{id}")
+    @DeleteMapping("/cdd/{id}")
     public ResponseEntity<?> deletePost(@PathVariable Integer id) {
         communityService.deletePost(id);
         return ResponseEntity.ok("Post deleted successfully.");
