@@ -1,17 +1,15 @@
-import { useState,useEffect } from 'react'
+import { useState, useEffect } from 'react'
 import { Button, Container, Card, Form } from 'react-bootstrap'
-import axios from 'axios'
 import { useNavigate, useLocation } from 'react-router-dom'
+import axios from 'axios'
 import UserProfile from '../components/profile/UserProfile'
 import '../styles/WritePostPage.css'
-import Header from '../components/layout/Header'
-import Footer from '../components/layout/Footer'
 
 export default function WritePostPage() {
     const navigate = useNavigate()
     const location = useLocation()
     const { boardName, prevPath } = location.state || { boardName: "게시판", prevPath: "/community" }
-    
+
     const [post, setPost] = useState({
         title: '',
         content: '',
@@ -21,7 +19,7 @@ export default function WritePostPage() {
 
     const handleChange = (e) => {
         const { name, value } = e.target
-        setPost({...post, [name]: value})
+        setPost({ ...post, [name]: value })
     }
 
     const handleSubmit = async (e) => {
@@ -40,26 +38,25 @@ export default function WritePostPage() {
     useEffect(() => {
         const fetchAuthorEmail = async () => {
             try {
-                const response = await axios.get('http://localhost:3030/user',{withCredentials:true,}); // 사용자 정보 요청
-                
+                const response = await axios.get('http://localhost:3030/user', { withCredentials: true, }) // 사용자 정보 요청
+
                 if (response.status === 200) {
-                    const { userEmail } = response.data; // 백엔드에서 반환된 user 객체의 email
-                    alert(JSON.stringify(response.data));
+                    const { userEmail } = response.data // 백엔드에서 반환된 user 객체의 email
+                    // alert(JSON.stringify(response.data)); // Debug
                     setPost((prevPost) => ({
                         ...prevPost,
                         author: userEmail // 작성자 정보를 post 상태에 반영
-                    }));
+                    }))
                 }
             } catch (error) {
-                alert(error);
+                console.error(error)
             }
         }
-        fetchAuthorEmail();
-    },[]);
+        fetchAuthorEmail()
+    }, [])
 
     return (
         <>
-            <Header />
             <Container className="py-5">
                 <Card className="p-4">
                     <h2 className="mb-4">{boardName} 글쓰기</h2>
@@ -95,14 +92,14 @@ export default function WritePostPage() {
                         </Form.Group>
 
                         <div className="d-flex justify-content-end gap-2">
-                            <Button 
-                                variant="secondary" 
+                            <Button
+                                variant="secondary"
                                 onClick={() => navigate(prevPath)}
                             >
                                 취소
                             </Button>
-                            <Button 
-                                variant="primary" 
+                            <Button
+                                variant="primary"
                                 type="submit"
                             >
                                 작성
@@ -111,7 +108,6 @@ export default function WritePostPage() {
                     </Form>
                 </Card>
             </Container>
-            <Footer />
         </>
     )
 }

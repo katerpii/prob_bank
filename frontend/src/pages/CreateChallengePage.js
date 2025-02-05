@@ -1,8 +1,6 @@
 import { useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { Form, Button, Container, Card } from 'react-bootstrap'
-import Header from '../components/layout/Header'
-import Footer from '../components/layout/Footer'
 
 export default function CreateProblemPage() {
     const navigate = useNavigate()
@@ -14,7 +12,7 @@ export default function CreateProblemPage() {
     })
 
     const handleInputChange = (e) => {
-        const { name, value } = e.target;
+        const { name, value } = e.target
         setProblemData(prev => ({
             ...prev,
             [name]: value
@@ -30,7 +28,7 @@ export default function CreateProblemPage() {
                     'Content-Type': 'application/json',
                 },
                 body: JSON.stringify(problemData)
-            });
+            })
 
             if (response.ok) {
                 alert('문제가 성공적으로 등록되었습니다.')
@@ -39,14 +37,13 @@ export default function CreateProblemPage() {
                 throw new Error('문제 등록에 실패했습니다.')
             }
         } catch (error) {
-            console.error('문제 등록 중 오류 발생:', error);
-            alert('문제 등록에 실패했습니다.');
+            console.error('문제 등록 중 오류 발생:', error)
+            alert('문제 등록에 실패했습니다.')
         }
-    };
+    }
 
     return (
         <>
-            <Header />
             <Container className="py-5">
                 <Card className="p-4">
                     <h2 className="mb-4">새로운 문제 작성</h2>
@@ -106,7 +103,6 @@ export default function CreateProblemPage() {
                     </Form>
                 </Card>
             </Container>
-            <Footer />
         </>
     )
 }

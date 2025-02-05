@@ -1,0 +1,10 @@
+/* App.css */
+.App {
+    display: flex;
+    flex-direction: column;
+    flex: 1;
+}
+
+.main-content {
+    flex: 1; /* 본문 영역이 남은 공간을 차지 */
+}  

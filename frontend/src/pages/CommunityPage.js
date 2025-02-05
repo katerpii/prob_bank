@@ -3,8 +3,6 @@ import axios from 'axios'
 import { Link } from 'react-router-dom'
 import { Container, Row } from 'react-bootstrap'
 import NavigateButton from '../components/common/NavigateButton'
-import Header from '../components/layout/Header'
-import Footer from '../components/layout/Footer'
 import '../styles/CommunityPage.css'
 
 // 날짜 포맷팅 함수
@@ -13,13 +11,13 @@ const formatDate = (dateString) => {
     const year = date.getFullYear()
     const month = String(date.getMonth() + 1).padStart(2, '0')
     const day = String(date.getDate()).padStart(2, '0')
-    
+
     return `${year}.${month}.${day}`
 }
 
 export default function CommunityPage() {
     const [posts, setPosts] = useState([{
-        board_id: '',
+        board_id: 0,
         title: '',
         author: '',
         likeCount: 0,
@@ -29,14 +27,13 @@ export default function CommunityPage() {
 
     // backend단에서 list 객체 가져오기
     useEffect(() => {
-        axios.get("/post/list") // get 요청 주소 (조정)
-            .then(res => setPosts(res.data.postList))
+        axios.get('http://localhost/community/post/list') // get 요청 주소 (조정)
+            .then(res => setPosts(res.data))
             .catch(error => console.log(error))
     }, [])
 
     return (
         <>
-            <Header />
             <Container>
                 <Row>
                     <div className="community-index">
@@ -106,7 +103,6 @@ export default function CommunityPage() {
                     </div>
                 </Row>
             </Container>
-            <Footer />
         </>
     )
 }
