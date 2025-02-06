@@ -32,22 +32,22 @@ export default function Router() { // path에 따른 Component 라우팅
             {/* Community 관련 */}
             <Route path="/community" element={<CommunityPage />} />
             <Route path="/community/posts/new" element={<WritePostPage />} />
-            <Route path="/community/posts/:idAndtitle" element={<ViewPostPage />} />
+            <Route path="/community/posts/:idAndTitle" element={<ViewPostPage />} />
             
             {/* Algorithm */}
             <Route path="/algorithm" element={<AlgorithmListPage />} />
             <Route path="/algorithm/challenges/new" element={<CreateChallengePage />} />
-            <Route path="/algorithm/:idAndtitle" element={<AlgorithmDetailPage />} />
+            <Route path="/algorithm/:idAndTitle" element={<AlgorithmDetailPage />} />
             
             {/* Wargame */}
             <Route path="/wargame" element={<WargameListPage />} />
             <Route path="/wargame/challenges/new" element={<CreateChallengePage />} />
-            <Route path="/wargame/:idAndtitle" element={<WargameDetailPage />} />
+            <Route path="/wargame/:idAndTitle" element={<WargameDetailPage />} />
             
             {/* Write-up */}
             <Route path="/write-up" element={<WriteUpPage />} />
             <Route path="/write-up/posts/new" element={<WritePostPage />} />
-            <Route path="/write-up/posts/:idAndtitle" element={<ViewPostPage />} />
+            <Route path="/write-up/posts/:idAndTitle" element={<ViewPostPage />} />
             
             {/* Ranking */}
             <Route path="/ranking" element={<RankingPage />} />

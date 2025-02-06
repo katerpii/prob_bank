@@ -5,7 +5,6 @@ import axios from 'axios'
 
 // 날짜 포맷팅 함수
 const formatDate = (dateString) => {
-    if (!dateString) return ''
     const date = new Date(dateString)
     const year = date.getFullYear()
     const month = String(date.getMonth() + 1).padStart(2, '0')
@@ -20,7 +19,6 @@ export default function ViewPostPage() {
     // URL 파라미터에서 id와 title을 합쳐서 넘긴 경우, "idAndTitle"이 들어옴.
     // 예: "/post/123-게시글제목" -> idAndTitle = "123-게시글제목"
     const { idAndTitle } = useParams()
-    console.log('idAndTitle:', idAndTitle) // 디버깅용
 
     // 실제로 게시글 번호(postId)만 필요하다면, split 해서 사용
     const postId = idAndTitle?.split('-')[0] || ''
@@ -32,15 +30,13 @@ export default function ViewPostPage() {
         author: '',
         likeCount: 0,
         viewCount: 0,
-        createdAt: ''
+        createdAt: 0
     })
 
     useEffect(() => {
         axios
-            .get(`http://localhost/post/${postId}`)
-            .then(res => {
-                setPost(res.data)
-            })
+            .get(`http://localhost:3030/${postId}`) // 경로 수정, backend API 작성
+            .then(res => setPost(res.data))
             .catch(error => console.log(error))
     }, [postId])
 
@@ -58,7 +54,7 @@ export default function ViewPostPage() {
 
                 {/* 실제 게시글 내용 */}
                 <div className="post-content" style={{ whiteSpace: 'pre-line' }}>
-                    {post.content}
+                    <h3>{post.content}</h3>
                 </div>
 
                 {/* 필요하다면 "뒤로가기" 버튼, 수정/삭제 버튼 등 추가 가능 */}

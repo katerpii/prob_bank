@@ -17,17 +17,17 @@ const formatDate = (dateString) => {
 
 export default function CommunityPage() {
     const [posts, setPosts] = useState([{
-        board_id: 0,
-        title: '',
-        author: '',
-        likeCount: 0,
-        viewCount: 0,
-        createdAt: ''
+        board_id: 0, // int형
+        title: '',   // string형
+        author: '',  // string형
+        likeCount: 0, // int형
+        viewCount: 0, // int형
+        createdAt: 0  // int형
     }])
 
     // backend단에서 list 객체 가져오기
     useEffect(() => {
-        axios.get('http://localhost/community/post/list') // get 요청 주소 (조정)
+        axios.get('http://localhost:3030/community/post/list') // get 요청 주소 (조정)
             .then(res => setPosts(res.data))
             .catch(error => console.log(error))
     }, [])
@@ -82,7 +82,7 @@ export default function CommunityPage() {
                                     </thead>
                                     <tbody>
                                         {posts.map((post) => (
-                                            <tr key={post.id} className="post-table-row">
+                                            <tr key={post.board_id} className="post-table-row">
                                                 <td className="post-title">
                                                     <Link to={`/community/posts/${post.board_id}-${post.title}`}>{post.title}</Link>
                                                 </td>
