@@ -14,9 +14,10 @@ import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
-import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.PutMapping;
+
 
 @RestController
 @RequiredArgsConstructor
@@ -29,6 +30,13 @@ public class CommunityController {
         List<CommunityDto> post= communityService.getAllPost();
         return ResponseEntity.ok(post);
     }
+
+    //게시글 조회(특정글 보여주기)
+    @GetMapping("/community/{id}")
+    public ResponseEntity<CommunityDto> getPost(@PathVariable Integer id) {
+        CommunityDto getpost=communityService.getPost(id);
+        return ResponseEntity.ok(getpost);
+    }
     
     // 게시글 추가 
     @PostMapping("/addpost")
@@ -37,9 +45,15 @@ public class CommunityController {
         return ResponseEntity.ok(savedPost); 
     }
     // 게시글 삭제 
-    @DeleteMapping("/{id}")
+    @DeleteMapping("delete/{id}")
     public ResponseEntity<?> deletePost(@PathVariable Integer id) {
         communityService.deletePost(id);
         return ResponseEntity.ok("Post deleted successfully.");
     }
+    // // 게시글 수정
+    // @PutMapping("update/{id}")
+    // public ResponseEntity<CommunityDto> updatePost(@PathVariable Integer id,CommunityDto post) {
+    //     CommunityDto updatePost=communityService.updatePost(id,post);
+    //     // return ResponseEntity.ok("F");
+    // }
 }   

@@ -24,6 +24,12 @@ public class CommnunityService {
     public List<CommunityDto> getAllPost(){
         return communityRepository.findAll();  
     }
+    // 게시글 조회(상세) api
+    public CommunityDto getPost(Integer id){
+        CommunityDto post =communityRepository.findById(id)
+        .orElseThrow(() -> new EntityNotFoundException("Post not found"));
+        return post; 
+    }
     // 게시글 추가 api
     public CommunityDto addPost(CommunityDto post){
         return communityRepository.save(post);
@@ -32,6 +38,7 @@ public class CommnunityService {
     @Transactional
     public void deletePost(Integer board_id) {
         // 글조회
+        // 인증증
         String currentUsername=userDetailService.getCurrentUsername();
         CommunityDto post = communityRepository.findById(board_id)
                 .orElseThrow(() -> new EntityNotFoundException("Post not found"));
@@ -43,6 +50,11 @@ public class CommnunityService {
 
         // 삭제
         communityRepository.delete(post);
-    }
+        }
 
+        // 게시글 수정 api
+        @Transactional 
+        public void updatePost(Integer board_id,CommunityDto post){
+        
+        }
 }
