@@ -16,7 +16,7 @@ import WargameDetailPage from '../pages/WargameDetailPage'
 import CreateChallengePage from '../pages/CreateChallengePage.js'
 import WriteUpPage from '../pages/WriteUpPage'
 import RankingPage from '../pages/RankingPage' 
-import NotFound from '../pages/404'  // 왜 이건 되는데
+import NotFound from '../pages/NotFound.js'  // 왜 이건 되는데
 
 export default function Router() { // path에 따른 Component 라우팅
     return (

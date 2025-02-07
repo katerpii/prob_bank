@@ -43,8 +43,6 @@ export default function LoginPage() {
                 login(response.data)
                 updateProfile(response.data)
                 alert('로그인 성공!')
-                // console.log('email: ' + response.data.email)
-                // console.log('권한: ' + response.data.authorities)
                 navigate("/")
             }
         } catch (error) {
