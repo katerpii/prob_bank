@@ -36,6 +36,7 @@
 }
 
 .post-actions {
-    margin-top: 1rem;
-    text-align: right;
+    display: flex;
+    gap: 10px; /* 버튼 간 간격 */
+    margin-top: 20px; /* 버튼 위 여백 */
 }
