@@ -1,9 +1,12 @@
 // ViewPostPage.js
 import React, { useEffect, useState } from 'react'
-import { useParams } from 'react-router-dom'
+import { useParams, useNavigate } from 'react-router-dom'
 import axios from 'axios'
+import { Button, Card } from 'react-bootstrap'
+import '../styles/ViewPostPage.css' // CSS 파일 분리
 
 // 날짜 포맷팅 함수
+// TODO : 날짜 포멧팅 hooks로 만들기
 const formatDate = (dateString) => {
     const date = new Date(dateString)
     const year = date.getFullYear()
@@ -22,9 +25,10 @@ export default function ViewPostPage() {
 
     // 실제로 게시글 번호(postId)만 필요하다면, split 해서 사용
     const postId = idAndTitle?.split('-')[0] || ''
+    const navigate = useNavigate()
 
     const [post, setPost] = useState({
-        post_id: 0,
+        board_id: 0,
         title: '',
         content: '',
         author: '',
@@ -35,34 +39,38 @@ export default function ViewPostPage() {
 
     useEffect(() => {
         axios
-            .get(`http://localhost:3030/${postId}`) // 경로 수정, backend API 작성
+            .get(`http://localhost:3030/community/${postId}`) // 경로 수정, backend API 작성
             .then(res => setPost(res.data))
             .catch(error => console.log(error))
     }, [postId])
 
     return (
         <>
-            <div className="view-post-container" style={{ padding: '2rem' }}>
-                <h2 className="post-title">{post.title}</h2>
+            <div className="view-post-container">
+                <Card className="post-card">
+                    <Card.Body>
+                        <Card.Title className="post-title">{post.title}</Card.Title>
+                        
+                        <div className="post-meta">
+                            <span>작성자: {post.author}</span>
+                            <span>작성일: {formatDate(post.createdAt)}</span>
+                            <span>조회수: {post.viewCount}</span>
+                            <span>좋아요: {post.likeCount}</span>
+                        </div>
 
-                <div className="post-meta" style={{ marginBottom: '1rem', color: '#555' }}>
-                    <span>작성자: {post.author}</span> &nbsp;|&nbsp;
-                    <span>작성일: {formatDate(post.createdAt)}</span> &nbsp;|&nbsp;
-                    <span>조회수: {post.viewCount}</span> &nbsp;|&nbsp;
-                    <span>좋아요: {post.likeCount}</span>
-                </div>
+                        {/* 실제 게시글 내용 */}
+                        <Card.Text className="post-content">
+                            {post.content}
+                        </Card.Text>
 
-                {/* 실제 게시글 내용 */}
-                <div className="post-content" style={{ whiteSpace: 'pre-line' }}>
-                    <h3>{post.content}</h3>
-                </div>
-
-                {/* 필요하다면 "뒤로가기" 버튼, 수정/삭제 버튼 등 추가 가능 */}
-                <div style={{ marginTop: '1rem' }}>
-                    <button onClick={() => window.history.back()}>
-                        뒤로가기
-                    </button>
-                </div>
+                        {/* 필요하다면 "뒤로가기" 버튼, 수정/삭제 버튼 등 추가 가능 */}
+                        <div className="post-actions">
+                            <Button variant="secondary" onClick={() => navigate(-1)}>
+                                뒤로가기
+                            </Button>
+                        </div>
+                    </Card.Body>
+                </Card>
             </div>
         </>
     )

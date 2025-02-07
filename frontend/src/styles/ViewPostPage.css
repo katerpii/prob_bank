@@ -1,0 +1,41 @@
+.view-post-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 2rem;
+}
+
+.post-card {
+    width: 100%;
+    max-width: 800px;
+    padding: 1.5rem;
+    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
+}
+
+.post-title {
+    font-size: 28px;
+    font-weight: bold;
+    color: #333;
+    margin-bottom: 1rem;
+}
+
+.post-meta {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    font-size: 14px;
+    color: #777;
+    margin-bottom: 1rem;
+}
+
+.post-content {
+    font-size: 18px;
+    line-height: 1.6;
+    color: #444;
+    white-space: pre-line;
+}
+
+.post-actions {
+    margin-top: 1rem;
+    text-align: right;
+}
