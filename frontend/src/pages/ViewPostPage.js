@@ -37,7 +37,7 @@ export default function ViewPostPage() {
 
     const handleDelete = () => {
         axios
-            .delete(`http://localhost:3030/community/${postId}`) // 삭제 API 호출
+            .delete(`http://localhost:3030/delete/${postId}`) // 삭제 API 호출
             .then(() => {
                 alert('게시글이 삭제되었습니다.')
                 navigate(-1)
