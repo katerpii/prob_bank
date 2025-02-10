@@ -1,6 +1,5 @@
 // App.js
 import React from 'react'
-import 'bootstrap/dist/css/bootstrap.min.css'
 import './styles/App.css'
 
 // Layout 구성 요소

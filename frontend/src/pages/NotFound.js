@@ -1,5 +1,4 @@
 // 수정 필요 X
-import { Container } from 'react-bootstrap'
 import errorImage from '../assets/error.png'
 
 export default function NotFound() {
