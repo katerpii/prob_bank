@@ -5,6 +5,7 @@ import com.example.backend.entity.*;
 import lombok.AllArgsConstructor;
 
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.service.annotation.PatchExchange;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -49,16 +50,18 @@ public class communityController {
     }
 
     // // 게시글 수정 api
-    // @PutMapping("community/{id}")
-    // public String putMethodName(@PathVariable String id, @RequestBody String entity) {
-    
-        
-    //     return entity;
+    // @PutMapping("community/updatepost/{id}")
+    // public ResponseEntity<Community> updatePost(@PathVariable Integer id, @RequestBody Community post) {
+    //     Community updatedpost=communityService.updatePost(id,post);
+    //     return ResponseEntity.ok(updatedpost);
     // }
     
-    // // 게시글 삭제 api
-    // @DeleteMapping("/community/deletepost")
-    // public
+    // 게시글 삭제 api
+    @DeleteMapping("/community/deletepost/{id}")
+    public String deletePost(@PathVariable Integer id){
+        String deletepost = communityService.deletePost(id);
+        return deletepost;
+    }
     
     
 }
