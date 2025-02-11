@@ -33,14 +33,15 @@ public class CommunityService {
         Optional<Community> detailPost = communityRepository.findById(id);
         return detailPost;
     }
-    // // 게시글 수정 api
-    // public Community updatePost(Integer id , Community post){
-    //     Optional<Community> findUpdatePost = communityRepository.findById(id);
-    //     Community updatepost =OptionaltoCommunity(findUpdatePost);
-    //     updatepost=post;
-    //     communityRepository.delete(post);
-    //     return communityRepository.save(updatepost);
-    // }
+    // 게시글 수정 api
+    public Community updatePost(Integer id , Community post){
+        Optional<Community> findUpdatePost = communityRepository.findById(id);
+        Community updatepost =OptionaltoCommunity(findUpdatePost);
+        post.setBoard_id(id);
+        System.out.println(post);
+        updatepost = post;
+        return communityRepository.save(updatepost);
+    }
 
     // 게시글 삭제 api
     public String deletePost(Integer id){

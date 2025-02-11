@@ -49,12 +49,12 @@ public class communityController {
         return ResponseEntity.ok(post);
     }
 
-    // // 게시글 수정 api
-    // @PutMapping("community/updatepost/{id}")
-    // public ResponseEntity<Community> updatePost(@PathVariable Integer id, @RequestBody Community post) {
-    //     Community updatedpost=communityService.updatePost(id,post);
-    //     return ResponseEntity.ok(updatedpost);
-    // }
+    // 게시글 수정 api
+    @PutMapping("community/updatepost/{id}")
+    public ResponseEntity<Community> updatePost(@PathVariable Integer id, @RequestBody Community post) {
+        Community updatedpost=communityService.updatePost(id,post);
+        return ResponseEntity.ok(updatedpost);
+    }
     
     // 게시글 삭제 api
     @DeleteMapping("/community/deletepost/{id}")

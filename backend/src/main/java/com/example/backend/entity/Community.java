@@ -19,7 +19,6 @@ import lombok.Data;
 @Data
 @Table(name="board")
 public class Community {
-
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Integer board_id;
@@ -40,5 +39,4 @@ public class Community {
     @UpdateTimestamp
     @Column(name="updated_date")
     private LocalDateTime updated_date;
-
 }
