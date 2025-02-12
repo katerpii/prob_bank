@@ -2,7 +2,7 @@ import React from 'react'
 import axios from 'axios'
 import { Link } from 'react-router-dom'
 import { AppProvider, SignInPage } from '@toolpad/core'
-import { Button } from '@mui/material'
+import { Button, Divider } from '@mui/material'
 import { useTheme } from '@mui/material/styles'
 import useAuthStore from '../store/useAuthStore'
 import useUserStore from '../store/useUserStore'
@@ -13,17 +13,20 @@ function Title() {
 
 function CustomButton() {
     return (
-        <Button type="submit" variant="outlined" color="info" size="small" disableElevation fullWidth sx={{ my: 2}}>
-            로그인
-        </Button>
+        <>
+            <Button type="submit" variant="outlined" color="info" size="small" disableElevation fullWidth sx={{ my: 2}}>
+                로그인
+            </Button>
+            <Divider> or </Divider>
+        </>
     )
 }
 
 function SignUpLink() {
     return (
-        <Link to="/join" variant="body2" >
+        <Button component={Link} to="/join" variant="outlined" color="info" size="small" disableElevation fullWidth sx={{ my: 2}}>
             회원가입
-        </Link>
+        </Button>
     )
 }
 
@@ -31,10 +34,11 @@ export default function CredentialsSignInPage() {
     const theme = useTheme()
 
     // preview-start
-    const providers = [{ id: 'credentials', name: 'Email and Password' }]
+    const providers = [{ id: 'credentials', name: 'Username, Email and Password' }]
     // preview-end
 
     const signIn = async (provider, formData) => {
+        const username = "test"
         const email = formData.get('email')
         const password = formData.get('password')
 
