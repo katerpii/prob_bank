@@ -1,4 +1,4 @@
-package com.example.backend.entity;
+// package com.example.backend.entity;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -26,15 +26,15 @@ public class User {
     @Column(name = "no", nullable = false)
     private Integer no;
 
-    @Column(name = "username", nullable = false)
-    private String username;
+//     @Column(name = "username", nullable = false)
+//     private String username;
 
-    @Column(name = "password", nullable = false)
-    private String password;
+//     @Column(name = "password", nullable = false)
+//     private String password;
 
     @Column(name = "user_email", unique = true, nullable = false)
     private String userEmail;
 
-    @Column(name = "role", nullable = false)
-    private String role;
-}
+//     @Column(name = "role", nullable = false)
+//     private String role;
+// }

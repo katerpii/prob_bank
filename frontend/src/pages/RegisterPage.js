@@ -12,7 +12,7 @@ function Title() {
 function CustomButton() {
     return (
         <Button type="submit" variant="outlined" color="info" size="small" disableElevation fullWidth sx={{ my: 2}}>
-            회원가입
+            가입하기
         </Button>
     )
 }
@@ -22,10 +22,11 @@ export default function CredentialsSignUpPage() {
     const navigate = useNavigate()
 
     // preview-start
-    const providers = [{ id: 'credentials', name: 'Email and Password' }]
+    const providers = [{ id: 'credentials', name: 'Username, Email and Password' }]
     // preview-end
 
     const join = async (provider, formData) => {
+        const username = "test"
         const email = formData.get('email')
         const password = formData.get('password')
         const name = "test"
@@ -33,7 +34,7 @@ export default function CredentialsSignUpPage() {
         try {
             const response = await axios.post(
                 'http://localhost:3030/join', // 백엔드 register EndPoint
-                { email, password, name },
+                { username, email, password },
                 { withCredentials: true }
             )
     
