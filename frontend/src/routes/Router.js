@@ -2,6 +2,8 @@ import React from 'react'
 import { Routes, Route } from 'react-router-dom'
 import MainPage from '../pages/MainPage'
 import LoginPage from '../pages/LoginPage'
+import RegisterPage from '../pages/RegisterPage'
+import CommunityPage from '../pages/CommunityPage'
 import NotFound from '../pages/NotFound'
 
 export default function Router() { // path에 따른 Page Routing
@@ -12,6 +14,10 @@ export default function Router() { // path에 따른 Page Routing
             
             {/* 로그인 관련 */}
             <Route path="/login" element={<LoginPage />} />
+            <Route path="/join" element={<RegisterPage />} />
+            
+            {/* 커뮤니티 */}
+            <Route path="/community" element={<CommunityPage />} />
             
             {/* 404 페이지 */}
             <Route path="*" element={<NotFound />} />
