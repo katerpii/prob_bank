@@ -10,6 +10,8 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
 import lombok.Data;
 
@@ -26,8 +28,9 @@ public class Community {
     @Column(name="title",length=255)
     private String title;
 
-    @Column(name="author",length=255)
-    private String author;
+    @ManyToOne
+    @JoinColumn(referencedColumnName="user_email")
+    private User author;
 
     @Column(name="content")
     private String content;

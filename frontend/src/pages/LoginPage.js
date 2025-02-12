@@ -1,6 +1,6 @@
 import React from 'react'
 import axios from 'axios'
-import { Link } from 'react-router-dom'
+import { Link, useNavigate } from 'react-router-dom'
 import { AppProvider, SignInPage } from '@toolpad/core'
 import { Button, Divider } from '@mui/material'
 import { useTheme } from '@mui/material/styles'
@@ -32,6 +32,8 @@ function SignUpLink() {
 
 export default function CredentialsSignInPage() {
     const theme = useTheme()
+    const navigate = useNavigate()
+    const navigate = useNavigate()
 
     // preview-start
     const providers = [{ id: 'credentials', name: 'Username, Email and Password' }]
@@ -60,6 +62,8 @@ export default function CredentialsSignInPage() {
                 setLoggedIn(true)
 
                 alert('로그인 성공!')
+                navigate("/")
+                navigate("/")
             } else {
                 alert('로그인에 실패하였습니다.')
             }
