@@ -28,11 +28,12 @@ export default function CredentialsSignUpPage() {
     const join = async (provider, formData) => {
         const email = formData.get('email')
         const password = formData.get('password')
+        const name = "test"
     
         try {
             const response = await axios.post(
                 'http://localhost:3030/join', // 백엔드 register EndPoint
-                { email, password },
+                { email, password, name },
                 { withCredentials: true }
             )
     

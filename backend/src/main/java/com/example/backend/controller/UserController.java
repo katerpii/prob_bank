@@ -2,26 +2,32 @@ package com.example.backend.controller;
 
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 
 import com.example.backend.service.UserService;
+
+import lombok.AllArgsConstructor;
+
 import com.example.backend.entity.User;
-
-// Security configuration은 시간이 좀 걸릴듯.. 
+import com.example.backend.dto.userDto.*;
 @RestController
+@AllArgsConstructor
+@CrossOrigin(origins = "http://localhost:3000", allowCredentials = "true")
 public class UserController {
-    private UserService userService;
+    private final UserService userService;
 
-    @GetMapping("/join")
-    public ResponseEntity<Void> join(@RequestBody User user){
-        userService.joinUser(user);
+    @PostMapping("/join")
+    public ResponseEntity<Void> join(@RequestBody JoinRequestDto form){
+        userService.joinUser(form);
         return ResponseEntity.ok().build();
     }
 
-    @GetMapping("/login")
+    @PostMapping("/login")
     public ResponseEntity<User> login(@RequestBody User user){
-        userService.loginProc();
+        // userService.loginProc();
         return ResponseEntity.ok(user);
     }
 }
