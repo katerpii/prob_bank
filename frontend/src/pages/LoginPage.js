@@ -43,7 +43,7 @@ export default function CredentialsSignInPage() {
         const { setUser } = useUserStore.getState()
         try {
             const response = await axios.post(
-                'http://localhost:3030/login/Proc', // 백엔드 login EndPoint
+                'http://localhost:3030/login', // 백엔드 login EndPoint
                 { email, password },
                 { withCredentials: true }
             )

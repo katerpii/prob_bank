@@ -35,16 +35,14 @@ public class UserService {
         }
     }
 
-    // public void loginProc(LoginRequestDto form){
-    //     User targetUser = userRepository.findByEmail(form.getEmail());
-    //     if (targetUser == null){
-    //         // 오류 처리
-    //     }
+    public boolean loginProc(LoginRequestDto form){
+        User targetUser = userRepository.findByUserEmail(form.getEmail());
 
-    //     String formPassword = passwordEncoder.encode(form.getPassword());            
+        if (targetUser == null){
+            // HttpSession session = form.getSession(true);
+            return true;
+        }
 
-    //     if (passwordEncoder.matches(form.getPassword(), targetUser.getPassword())){
-    //         // HttpSession session = form.getSession(true);
-    //     }
-    // }
+        return passwordEncoder.matches(form.getPassword(), targetUser.getPassword());
+    }
 }
