@@ -7,6 +7,7 @@ const useAuthStore = create(
         (set) => ({
             isLoggedIn: false,
             setLoggedIn: (status) => set({ isLoggedIn: status }),
+            logout: () => set({isLoggedIn: false })
         }),
         {
             name: 'auth-store', // localStorage에 저장될 키 이름

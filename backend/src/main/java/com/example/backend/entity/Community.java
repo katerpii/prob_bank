@@ -29,7 +29,7 @@ public class Community {
     private String title;
 
     @ManyToOne
-    @JoinColumn(referencedColumnName="user_email")
+    @JoinColumn(name="author", referencedColumnName="user_email")
     private User author;
 
     @Column(name="content")

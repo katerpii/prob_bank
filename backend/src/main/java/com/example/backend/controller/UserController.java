@@ -36,11 +36,18 @@ public class UserController {
         if (isLoginSuccess){
             HttpSession session = request.getSession(true);
             session.setAttribute("user_email", form.getEmail());
+            session.setMaxInactiveInterval(1800);
 
             User user = userRepository.findByUserEmail(form.getEmail());
             return ResponseEntity.ok(user);
         }
         
         return ResponseEntity.status(401).body("Login Failed");
+    }
+
+    @PostMapping("/logout")
+    public ResponseEntity<?> logout(HttpSession session){
+        session.invalidate();
+        return ResponseEntity.ok().body("Logout Success!");
     }
 }

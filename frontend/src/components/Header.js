@@ -16,6 +16,7 @@ export default function Header() {
     const handleLogout = () => {
         logout()
         clearUser()
+        navigate('/')
     }
 
     // 로그인 상태에 따른 세션 설정

@@ -3,6 +3,13 @@ package com.example.backend.service;
 import com.example.backend.entity.*;
 import com.example.backend.repository.*;
 
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpSession;
+
+import com.example.backend.controller.CommunityController;
+import com.example.backend.dto.communityDto.AllPostViewDto;
+import com.example.backend.dto.communityDto.CommunityRequestDto;
+
 import java.util.List;
 import java.util.Optional;
 
@@ -15,13 +22,25 @@ import lombok.AllArgsConstructor;
 public class CommunityService {
 
     final private CommunityRepository communityRepository;
+    final private UserRepository userRepository;
 
     public static Community OptionaltoCommunity(Optional<Community> object){
         return (Community)object.orElse(null) ;   
     }
+
     // 게시글 추가 api
-    public Community addPost(Community post){
-        return communityRepository.save(post);
+    public Community addPost(CommunityRequestDto input, HttpSession session){
+        // 이메일 추출 
+        String userEmail = (String) session.getAttribute("user_email");
+        // 해당 이메일 기반 작성자 객체 생성 
+        User author = userRepository.findByUserEmail(userEmail);
+
+        Community newPost = new Community();
+        newPost.setAuthor(author);
+        newPost.setTitle(input.getTitle());
+        newPost.setContent(input.getContent());
+
+        return communityRepository.save(newPost);
     } 
     // 게시글 전체 조회 api
     public List<Community> getAllPost(List<Community> allpost){

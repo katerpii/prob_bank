@@ -15,7 +15,7 @@ import com.example.backend.entity.User;
 public class UserService {
     
     private final UserRepository userRepository;
-    private final BCryptPasswordEncoder passwordEncoder= new BCryptPasswordEncoder();
+    private final BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
 
     public void joinUser(JoinRequestDto form){
         if (userRepository.findByUserEmail(form.getEmail()) == null){
@@ -35,7 +35,7 @@ public class UserService {
         User targetUser = userRepository.findByUserEmail(form.getEmail());
         if (targetUser == null){
             // HttpSession session = form.getSession(true);
-            return true;
+            return false;
         }
         return passwordEncoder.matches(form.getPassword(), targetUser.getPassword());
     }

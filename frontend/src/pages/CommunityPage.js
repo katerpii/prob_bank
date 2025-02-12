@@ -106,7 +106,7 @@ export default function CommunityPage() {
                                             }}
                                         >
                                             <TableCell>{post.title}</TableCell>
-                                            <TableCell>{post.author}</TableCell>
+                                            <TableCell>{post.author.userEmail}</TableCell>
                                             <TableCell>{post.createdAt}</TableCell>
                                             <TableCell>{post.viewCount}</TableCell>
                                         </TableRow>

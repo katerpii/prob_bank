@@ -33,14 +33,13 @@ function SignUpLink() {
 export default function CredentialsSignInPage() {
     const theme = useTheme()
     const navigate = useNavigate()
-    const navigate = useNavigate()
 
     // preview-start
     const providers = [{ id: 'credentials', name: 'Username, Email and Password' }]
     // preview-end
 
     const signIn = async (provider, formData) => {
-        const username = "test"
+        const name = "test"
         const email = formData.get('email')
         const password = formData.get('password')
 
@@ -50,7 +49,7 @@ export default function CredentialsSignInPage() {
         try {
             const response = await axios.post(
                 'http://localhost:3030/login', // 백엔드 login EndPoint
-                { email, password },
+                { email, password, name },
                 { withCredentials: true }
             )
 
@@ -62,7 +61,6 @@ export default function CredentialsSignInPage() {
                 setLoggedIn(true)
 
                 alert('로그인 성공!')
-                navigate("/")
                 navigate("/")
             } else {
                 alert('로그인에 실패하였습니다.')
