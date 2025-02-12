@@ -32,6 +32,7 @@ function SignUpLink() {
 
 export default function CredentialsSignInPage() {
     const theme = useTheme()
+    const navigate = useNavigate()
 
     // preview-start
     const providers = [{ id: 'credentials', name: 'Username, Email and Password' }]
@@ -60,6 +61,7 @@ export default function CredentialsSignInPage() {
                 setLoggedIn(true)
 
                 alert('로그인 성공!')
+                navigate("/")
             } else {
                 alert('로그인에 실패하였습니다.')
             }
