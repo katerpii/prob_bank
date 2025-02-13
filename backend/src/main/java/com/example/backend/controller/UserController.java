@@ -35,7 +35,7 @@ public class UserController {
 
         if (isLoginSuccess){
             HttpSession session = request.getSession(true);
-            session.setAttribute("user_email", form.getEmail());
+            session.setAttribute("user_email", form.getEmail()); 
             session.setMaxInactiveInterval(1800);
 
             User user = userRepository.findByUserEmail(form.getEmail());

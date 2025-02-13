@@ -36,7 +36,7 @@ public class CommunityService {
         User author = userRepository.findByUserEmail(userEmail);
 
         Community newPost = new Community();
-        newPost.setAuthor(author);
+        newPost.setAuthor(author); 
         newPost.setTitle(input.getTitle());
         newPost.setContent(input.getContent());
 

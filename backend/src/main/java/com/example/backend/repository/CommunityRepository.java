@@ -4,8 +4,7 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
 import com.example.backend.entity.Community;
-
 @Repository
 public interface CommunityRepository extends JpaRepository<Community,Integer> {
-    
+    // Community findByBoard_id(Integer board_id);
 }
