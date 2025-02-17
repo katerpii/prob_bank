@@ -16,6 +16,8 @@ import {
     TableRow
 } from '@mui/material'
 import { Search } from '@mui/icons-material'
+import { Link } from 'react-router-dom'
+import useUserStore from '../store/useUserStore'
 
 export default function CommunityPage() {
     const [posts, setPosts] = useState([{
@@ -26,6 +28,8 @@ export default function CommunityPage() {
         viewCount: 0,
         createdAt: 0
     }])
+
+    const { userInfo } = useUserStore.getState()
 
     useEffect(() => {
         axios.get('http://localhost:3030/community')
@@ -49,10 +53,10 @@ export default function CommunityPage() {
                     {/* 왼쪽 영역 (사이드 컨텐츠) */}
                     <Grid item xs={12} md={4}>
                         <Typography variant="h5" sx={{ fontWeight: 'bold', mb: 2 }}>
-                            사이드 컨텐츠
+                            UserProfile
                         </Typography>
                         <Typography variant="body2">
-                            여기에 왼쪽 영역의 내용을 추가할 수 있습니다.
+                            userName
                         </Typography>
                     </Grid>
 
@@ -75,6 +79,8 @@ export default function CommunityPage() {
                                 sx={{ width: 300 }}
                             />
                             <Button 
+                                component={Link}
+                                to="/community/new/post"
                                 variant="contained" 
                                 color="primary"
                                 sx={{ borderRadius: 1 }}
@@ -105,7 +111,7 @@ export default function CommunityPage() {
                                                 }
                                             }}
                                         >
-                                            <TableCell>{post.title}</TableCell>
+                                            <TableCell><Link to={`/community/post/${post.board_id}-${post.title}`}>{post.title}</Link></TableCell>
                                             <TableCell>{post.author.userEmail}</TableCell>
                                             <TableCell>{post.createdAt}</TableCell>
                                             <TableCell>{post.viewCount}</TableCell>
