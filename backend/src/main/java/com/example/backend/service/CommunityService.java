@@ -6,7 +6,7 @@ import com.example.backend.repository.*;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpSession;
 
-import com.example.backend.controller.CommunityController;
+//import com.example.backend.controller.CommunityController;
 import com.example.backend.dto.communityDto.AllPostViewDto;
 import com.example.backend.dto.communityDto.CommunityRequestDto;
 

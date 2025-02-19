@@ -27,7 +27,7 @@ import org.springframework.web.bind.annotation.PutMapping;
 @RestController
 @AllArgsConstructor
 @CrossOrigin(origins = "http://localhost:3000", allowCredentials = "true")
-public class CommunityController {
+public class communityController {
 
     final private CommunityService communityService;
     
