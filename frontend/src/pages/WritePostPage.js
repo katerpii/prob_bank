@@ -20,10 +20,9 @@ export default function WritePostPage() {
         setPost({ ...post, [name]: value })
     }
 
-    const handleSubmit = async (e) => {
-        e.preventDefault()
+    const handleSubmit = async () => {
         try {
-            await axios.post('http://localhost:3030/addpost', post)
+            await axios.post('http://localhost:3030/community/addpost', post, { withCredentials: true })
             setAlertMessage('게시글이 작성되었습니다!')
             navigate(-1)
         } catch (error) {
@@ -91,7 +90,7 @@ export default function WritePostPage() {
                                 fullWidth
                                 name="content"
                                 multiline
-                                rows={10}
+                                rows={8}
                                 value={post.content}
                                 onChange={handleChange}
                                 required
@@ -102,7 +101,7 @@ export default function WritePostPage() {
                                 <Button variant="contained" color="secondary" onClick={() => navigate(-1)}>
                                     취소
                                 </Button>
-                                <Button variant="contained" color="primary" type="submit">
+                                <Button variant="contained" color="primary" onClick={handleSubmit}>
                                     작성
                                 </Button>
                             </Stack>
