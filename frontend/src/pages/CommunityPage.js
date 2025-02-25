@@ -32,7 +32,7 @@ export default function CommunityPage() {
     const { userInfo } = useUserStore.getState()
 
     useEffect(() => {
-        axios.get('http://localhost:3030/community')
+        axios.get('http://localhost:3030/community',{ withCredentials: true })
             .then(response => { setPosts(response.data) })
             .catch(error => { console.error('게시글을 불러오는데 실패했습니다:', error) })
     }, [])

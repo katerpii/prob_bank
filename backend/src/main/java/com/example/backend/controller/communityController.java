@@ -2,15 +2,13 @@ package com.example.backend.controller;
 
 import com.example.backend.service.*;
 import com.example.backend.entity.*;
-import com.example.backend.dto.communityDto.AllPostViewDto;
-import com.example.backend.dto.communityDto.CommunityRequestDto;
+import com.example.backend.dto.communityDto.*;
 import lombok.AllArgsConstructor;
 
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Optional;
 
 import jakarta.servlet.http.HttpSession;
 import jakarta.servlet.http.HttpServletRequest;
@@ -27,7 +25,7 @@ import org.springframework.web.bind.annotation.PutMapping;
 @RestController
 @AllArgsConstructor
 @CrossOrigin(origins = "http://localhost:3000", allowCredentials = "true")
-public class CommunityController {
+public class communityController {
 
     final private CommunityService communityService;
     
@@ -57,31 +55,43 @@ public class CommunityController {
     }
 
     // 게시글 전체 조회 api
+    // dto로 구현중 findAll() 메서드의 반환값이 List<T>로 반환 되어 힘듦 
     @GetMapping("/community") 
-    public ResponseEntity<List<Community>> getAllPost() {
+    public ResponseEntity<?> getAllPost() {
         List<Community> allpost = new ArrayList<Community>(); 
         allpost = communityService.getAllPost(allpost);
         return ResponseEntity.ok(allpost);  
     }
 
     // 게시글 상세 조회 api
+    // dto 변환 으로 title,author,create at만 반환 
     @GetMapping("/community/{id}")
-    public ResponseEntity<Optional<Community>> getDetailPost(@PathVariable Integer id) {
-        Optional<Community> post = communityService.getDetailPost(id); 
+    public ResponseEntity<?> getDetailPost(@PathVariable Integer id) {
+        CommunityRequestDto post = communityService.getDetailPost(id); 
         return ResponseEntity.ok(post);
     }
 
     // 게시글 수정 api
-    @PutMapping("community/updatepost/{id}")
-    public ResponseEntity<Community> updatePost(@PathVariable Integer id, @RequestBody Community post) {
-        Community updatedpost=communityService.updatePost(id,post);
-        return ResponseEntity.ok(updatedpost);
+    @PutMapping("/community/updatepost/{id}")
+    public ResponseEntity<?> updatePost(@PathVariable Integer id, @RequestBody CommunityRequestDto post, HttpServletRequest request) {
+        HttpSession session = request.getSession(false);
+
+        if(session ==null || session.getAttribute("user_email")==null){
+            return ResponseEntity.status(400).body("No session in request or  Not a valid session");
+        }
+        communityService.updatePost(id,post,session);
+        return ResponseEntity.ok().body("success update");
     }
     
     // 게시글 삭제 api
     @DeleteMapping("/community/deletepost/{id}")
-    public String deletePost(@PathVariable Integer id){
-        String deletepost = communityService.deletePost(id);
+    public String deletePost(@PathVariable Integer id,HttpServletRequest request){
+        HttpSession session = request.getSession(false);
+
+        if(session == null || session.getAttribute("user_email")==null){
+            ResponseEntity.status(400).body("No session in request or  Not a valid session");
+        }
+        String deletepost = communityService.deletePost(id,session);
         return deletepost;
     }
 }

@@ -25,7 +25,7 @@ export default function ViewPostPage() {
 
     useEffect(() => {
         axios
-            .get(`http://localhost:3030/community/${postId}`)
+            .get(`http://localhost:3030/community/${postId}`,{ withCredentials: true })
             .then(res => setPost(res.data))
             .catch(error => {
                 console.log(error)
@@ -35,7 +35,7 @@ export default function ViewPostPage() {
 
     const handleDelete = async () => {
         try {
-            await axios.delete(`http://localhost:3030/deletepost/${postId}`)
+            await axios.delete(`http://localhost:3030/community/deletepost/${postId}`,{ withCredentials: true })
             setAlertMessage('게시글이 삭제되었습니다.')
             navigate(-1)
         } catch (error) {

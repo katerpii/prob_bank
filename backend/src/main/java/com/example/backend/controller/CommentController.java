@@ -24,6 +24,7 @@ public class CommentController {
 
     private final CommentService commentService;
 
+    // 댓글 추가 api
     @PostMapping("/community/addcomment/{board_id}")
     public ResponseEntity<?> addComment(@RequestBody String content, @PathVariable Integer board_id, HttpServletRequest request) {
         if (board_id == null){
@@ -39,6 +40,10 @@ public class CommentController {
 
         return ResponseEntity.ok().build();
     }
+
+    // 댓글 삭제 api 
+
+    // 댓글 수정 api
     
 
 }

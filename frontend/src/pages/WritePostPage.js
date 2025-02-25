@@ -23,7 +23,7 @@ export default function WritePostPage() {
     const handleSubmit = async (e) => {
         e.preventDefault()
         try {
-            await axios.post('http://localhost:3030/addpost', post)
+            await axios.post('http://localhost:3030/community/addpost', post,{ withCredentials: true })
             setAlertMessage('게시글이 작성되었습니다!')
             navigate(-1)
         } catch (error) {

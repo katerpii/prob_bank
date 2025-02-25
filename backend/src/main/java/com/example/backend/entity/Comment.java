@@ -3,7 +3,6 @@ package com.example.backend.entity;
 import java.time.LocalDateTime;
 
 import org.hibernate.annotations.CreationTimestamp;
-import org.hibernate.annotations.UpdateTimestamp;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -13,17 +12,20 @@ import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
+import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 @Data
 @Entity
-@Table(name="comment")
+@AllArgsConstructor 
+@NoArgsConstructor
 @Builder
+@Table(name="comment")
 public class Comment {
-
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer comment_id;
 
     @ManyToOne
@@ -41,8 +43,6 @@ public class Comment {
     @CreationTimestamp
     private LocalDateTime create_at;
 
-    @Column(name="updated_at")
-    @UpdateTimestamp
-    private LocalDateTime update_at;
-    
+    @Column(name="updated",columnDefinition = "boolean default false")
+    private boolean updated;
 }
