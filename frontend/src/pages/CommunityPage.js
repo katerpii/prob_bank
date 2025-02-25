@@ -112,7 +112,7 @@ export default function CommunityPage() {
                                             }}
                                         >
                                             <TableCell><Link to={`/community/post/${post.board_id}-${post.title}`}>{post.title}</Link></TableCell>
-                                            <TableCell>{post.author.userEmail}</TableCell>
+                                            <TableCell>{post.author}</TableCell>
                                             <TableCell>{post.createdAt}</TableCell>
                                             <TableCell>{post.viewCount}</TableCell>
                                         </TableRow>
