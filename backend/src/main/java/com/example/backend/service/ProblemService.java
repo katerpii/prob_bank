@@ -5,8 +5,13 @@ import org.springframework.stereotype.Service;
 
 import com.example.backend.repository.ProblemRepository;
 import com.example.backend.entity.*;
+
+import java.io.File;
+import java.io.IOException;
 import java.util.List;
 import java.util.Optional;
+import java.util.concurrent.TimeUnit;
+
 import com.example.backend.dto.ProblemDto.AddProblemDto;
 
 
@@ -32,7 +37,7 @@ public class ProblemService {
         return problemRepository.findById(id);
     }
     
-    public void addProblem (AddProblemDto problemform){
+    public void addProblem (AddProblemDto problemform) {
         //저장하기(dtd), 새로운 객체 생성 해서 저장
         Problem newProblem = new Problem();
         newProblem.setTitle(problemform.getTitle());
@@ -40,6 +45,35 @@ public class ProblemService {
         newProblem.setType(problemform.getType());
         problemRepository.save(newProblem);
 
+    }
+    // 일단 문제 리스트 + 상세조회 완성해야됌 -> 테스트 문제 하나 DB 등록
+    // -> 프론트에서 제출 폼 만드는 대로 컴파일 관련 api 보완 
+    public boolean getAnswer(String code) {
+        String command = "gcc -o test submit.c"; 
+        ProcessBuilder processBuilder = new ProcessBuilder("cmd.exe", "/c", command);
+        processBuilder.directory(new File("C:\\Side_Project\\backend\\src\\main\\java\\com\\example\\submit\\"));
+        try {
+            Process process = processBuilder.start();
+            // if (process == null){
+            //     throw new IOException();
+            // }
+            
+            int exitCode = process.waitFor(); 
+
+            if (exitCode == 0){
+                return true;
+            }
+            else {
+                // throw new InterruptedException();
+                return false;
+            }
+        } catch(IOException e){
+            e.printStackTrace();
+            return false;
+        } catch(InterruptedException error){
+            error.printStackTrace();
+            return false;
+        }
     }
 
 }

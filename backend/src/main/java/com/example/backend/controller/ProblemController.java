@@ -1,6 +1,5 @@
 package com.example.backend.controller;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -8,14 +7,14 @@ import com.example.backend.dto.ProblemDto.AddProblemDto;
 import com.example.backend.entity.*;
 import com.example.backend.repository.UserRepository;
 
+import java.io.FileWriter;
+import java.io.IOException;
 import java.util.List;
 import com.example.backend.service.ProblemService;
 
-import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpSession;
 import lombok.AllArgsConstructor;
-import lombok.NoArgsConstructor;
 
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -63,7 +62,19 @@ public class ProblemController {
 
     }
 
-    
+    @PostMapping("/problem/submit")
+    public ResponseEntity<?> correctCompare(@RequestBody String code){
+        try{
+            FileWriter submit = new FileWriter("C:\\Side_Project\\backend\\src\\main\\java\\com\\example\\submit\\submit.c");
+            submit.write(code);
+            submit.close();
+        }
+        catch(IOException error){
+            System.out.println("error");
+            return ResponseEntity.ok().body("wrong");
+        }
 
-    
+        boolean result = problemService.getAnswer(code);
+        return ResponseEntity.ok().body("correct");
+    }    
 }
