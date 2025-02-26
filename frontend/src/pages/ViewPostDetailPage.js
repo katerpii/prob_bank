@@ -33,7 +33,7 @@ export default function ViewPostPage() {
                 setErrorMessage('게시글을 불러오는 데 실패했습니다.')
             })
         axios
-            .get('http://localhost:3030/auth/check', { withCredentials: true })
+            .get('http://localhost:3030/profile', { withCredentials: true })
             .then(res => setAuthor(res.data.email))
             .catch(error => console.log(error))
     }, [postId])

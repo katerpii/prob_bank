@@ -2,8 +2,8 @@ import React from 'react'
 import { Box, Stack, Typography, Avatar, Divider, Button } from '@mui/material'
 import { AccountPreview, AccountPopoverFooter, SignOutButton } from '@toolpad/core/Account'
 import { useNavigate } from 'react-router-dom'
-import useAuthStore from './useAuthStore'
-import useUserStore from './useUserStore'
+import useAuthStore from '../store/useAuthStore'
+import useUserStore from '../store/useUserStore'
 
 export function UserOrg() {
     const navigate = useNavigate()

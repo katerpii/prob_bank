@@ -4,7 +4,7 @@ import { AuthenticationContext, SessionContext } from '@toolpad/core/AppProvider
 import { Account } from '@toolpad/core/Account'
 import { Link, useNavigate } from 'react-router-dom'
 import axios from 'axios'
-import { UserOrg } from '../store/UserOrg'
+import { UserOrg } from './UserOrg'
 import useAuthStore from '../store/useAuthStore'
 
 export default function Header() {
@@ -17,7 +17,7 @@ export default function Header() {
         if (isLoggedIn) {
             // 실제 백엔드 API 호출 (현재는 주석 처리)
             /*
-            axios.get('http://localhost:3030/user/profile', { withCredentials: true })
+            axios.get('http://localhost:3030/profile', { withCredentials: true })
                 .then(response => {
                     setCustomSession({
                         user: {
