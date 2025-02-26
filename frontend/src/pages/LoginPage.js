@@ -6,6 +6,7 @@ import useAuthStore from '../store/useAuthStore'
 import useUserStore from '../store/useUserStore'
 
 export default function LoginPage() {
+    // 라우터 네비게이션 훅 초기화
     const navigate = useNavigate()
 
     // Zustand(React 상태 관리 라이브러리)에서 전역 상태 업데이트 함수를 가져옴
@@ -19,7 +20,7 @@ export default function LoginPage() {
         severity: 'info'   // Alert의 상태 (success, error, warning, info)
     })
 
-    // 로그인 폼 제출 함수
+    // 로그인 폼 제출 핸들러
     const handleSignIn = async (event) => {
         event.preventDefault() // 폼 제출 시 페이지 리로드 방지
 
@@ -71,32 +72,16 @@ export default function LoginPage() {
     }
 
     return (
-        <Container
-            maxWidth="sm"
-            sx={{
-                display: 'flex',
-                flexDirection: 'column',
-                justifyContent: 'center',
-                height: '100vh'    // 화면 전체 높이 사용
-            }}
-        >
-            {/* 로그인 박스 (MUI Box) */}
-            <Box
-                component="form"
-                onSubmit={handleSignIn}
-                noValidate
-                sx={{
-                    p: 3,
-                    border: '1px solid #ccc',
-                    borderRadius: 2
-                }}
-            >
-
+        // 전체 페이지 컨테이너
+        <Container maxWidth="sm" sx={{ display: 'flex', flexDirection: 'column', justifyContent: 'center', height: '100vh' }}>
+            {/* 로그인 폼 박스 */}
+            <Box component="form" onSubmit={handleSignIn} noValidate sx={{ p: 3, border: '1px solid #ccc', borderRadius: 2 }}>
+                {/* 페이지 제목 */}
                 <Typography variant="h4" align="center" sx={{ mb: 3 }}>
                     로그인
                 </Typography>
 
-                {/* 알림 메시지를 여기로 이동 */}
+                {/* 알림 메시지 영역 */}
                 {snackbarData.open && (
                     <Alert
                         severity={snackbarData.severity}

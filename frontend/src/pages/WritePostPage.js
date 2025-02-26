@@ -5,13 +5,14 @@ import { useNavigate, useLocation } from 'react-router-dom'
 import axios from 'axios'
 
 export default function WritePostPage() {
+    // 라우터 훅 초기화 및 수정 모드 확인
     const navigate = useNavigate()
     const location = useLocation()
     const isEditMode = location.pathname === '/community/edit/post'
 
+    // 상태 관리
     const [alertMessage, setAlertMessage] = useState('')
     const [errorMessage, setErrorMessage] = useState('')
-
     const [post, setPost] = useState({
         board_id: 0,
         title: '',
@@ -19,6 +20,7 @@ export default function WritePostPage() {
         author: '',
     })
 
+    // 수정 모드일 때 게시글 데이터 로드
     useEffect(() => {
         if (isEditMode && location.state?.post) {
             const editPost = location.state.post;
@@ -31,11 +33,13 @@ export default function WritePostPage() {
         }
     }, [isEditMode, location.state])
 
+    // 입력 필드 변경 핸들러
     const handleChange = (e) => {
         const { name, value } = e.target
         setPost({ ...post, [name]: value })
     }
 
+    // 폼 제출 핸들러 (작성/수정)
     const handleSubmit = async () => {
         try {
             if (isEditMode) {
@@ -56,6 +60,7 @@ export default function WritePostPage() {
     }
 
     return (
+        // 전체 페이지 컨테이너
         <Container sx={{ mt: 12, py: 5 }}> {/* mt: 12 (theme spacing 단위, 보통 8px 기준 -> 96px)로 조정 */}
             {/* Alert 위치: AppBar 아래 빈 공간 (예: 80px) */}
             {alertMessage && (
@@ -87,14 +92,17 @@ export default function WritePostPage() {
                 </Alert>
             )}
 
+            {/* 메인 콘텐츠 그리드 */}
             <Grid container spacing={3}>
-                {/* 왼쪽: 글 작성 폼 */}
+                {/* 왼쪽: 글 작성/수정 폼 */}
                 <Grid item xs={12} md={8}>
                     <Card sx={{ p: 4 }}>
+                        {/* 페이지 제목 */}
                         <Typography variant="h4" gutterBottom>
                             {isEditMode ? '글 수정하기' : '글쓰기'}
                         </Typography>
 
+                        {/* 입력 폼 */}
                         <Box component="form" onSubmit={handleSubmit} sx={{ display: 'flex', flexDirection: 'column', gap: 2 }}>
                             {/* 제목 입력 */}
                             <TextField
