@@ -56,7 +56,9 @@ public class CommunityService {
         Community convertDetailPost = OptionaltoCommunity(findDetailPost);
         // entity -> dto 변환 후 dto 반환
         CommunityRequestDto detailPost= new CommunityRequestDto();
+        detailPost.setBoard_id(convertDetailPost.getBoard_id());
         detailPost.setAuthor(convertDetailPost.getAuthor().getUserEmail());
+        detailPost.setContent(convertDetailPost.getContent());
         detailPost.setTitle(convertDetailPost.getTitle());
         detailPost.setCreate_At(convertDetailPost.getCreate_date());
 

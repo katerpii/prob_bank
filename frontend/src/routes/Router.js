@@ -22,7 +22,7 @@ export default function Router() { // path에 따른 Page Routing
             <Route path="/community" element={<CommunityPage />} />
             <Route path="/community/post/:IdAndTitle" element={<ViewPostDetailPage />} />
             <Route path="/community/new/post" element={<WritePostPage />} />
-            <Route path="/community/edit/post" element={<WritePostPage />} />
+            <Route path="/community/edit/post/:IdAndTitle" element={<WritePostPage />} />
 
             {/* 404 페이지 */}
             <Route path="*" element={<NotFound />} />

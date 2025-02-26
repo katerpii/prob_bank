@@ -89,9 +89,10 @@ export default function ViewPostPage() {
                             <Button 
                                 variant="contained" 
                                 color="primary" 
-                                onClick={() => navigate(`/community/edit/post`, { 
-                                    state: { post: post }
-                                })}
+                                onClick={() => {
+                                    console.log("전달하려는 board_id: ", post.board_id)
+                                    navigate(`/community/edit/post/${post.board_id}-${post.title.replace(/\s+/g, '-')}`, { state: {post: post} })
+                                }}
                             >
                                 수정
                             </Button>

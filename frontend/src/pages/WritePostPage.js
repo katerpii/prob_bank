@@ -8,7 +8,7 @@ export default function WritePostPage() {
     // 라우터 훅 초기화 및 수정 모드 확인
     const navigate = useNavigate()
     const location = useLocation()
-    const isEditMode = location.pathname === '/community/edit/post'
+    const isEditMode = location.pathname.includes('/community/edit/post')
 
     // 상태 관리
     const [alertMessage, setAlertMessage] = useState('')
@@ -23,13 +23,15 @@ export default function WritePostPage() {
     // 수정 모드일 때 게시글 데이터 로드
     useEffect(() => {
         if (isEditMode && location.state?.post) {
-            const editPost = location.state.post;
-            setPost({ // DeBug: CheckPostData
+            const editPost = location.state.post
+            console.log("전체 location.state:", location.state.post);
+            console.log(editPost)
+            setPost({
                 board_id: editPost.board_id,
                 title: editPost.title,
                 content: editPost.content,
                 author: editPost.author
-            });
+            })
         }
     }, [isEditMode, location.state])
 
