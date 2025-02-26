@@ -1,23 +1,9 @@
 import React, { useState, useEffect } from 'react'
 import axios from 'axios'
-import { 
-    Box, 
-    Container, 
-    Grid, 
-    Typography, 
-    Button, 
-    TextField,
-    Paper,
-    Table,
-    TableBody,
-    TableCell,
-    TableContainer,
-    TableHead,
-    TableRow
-} from '@mui/material'
+import { Box, Container, Grid, Typography, Button, TextField, Paper, Table, TableBody, TableCell, TableContainer, TableHead, TableRow } from '@mui/material'
 import { Search } from '@mui/icons-material'
 import { Link } from 'react-router-dom'
-import useUserStore from '../store/useUserStore'
+// import useUserStore from '../store/useUserStore'
 
 export default function CommunityPage() {
     const [posts, setPosts] = useState([{
@@ -29,10 +15,8 @@ export default function CommunityPage() {
         createdAt: 0
     }])
 
-    const { userInfo } = useUserStore.getState()
-
     useEffect(() => {
-        axios.get('http://localhost:3030/community',{ withCredentials: true })
+        axios.get('http://localhost:3030/community', { withCredentials: true })
             .then(response => { setPosts(response.data) })
             .catch(error => { console.error('게시글을 불러오는데 실패했습니다:', error) })
     }, [])
@@ -112,7 +96,7 @@ export default function CommunityPage() {
                                             }}
                                         >
                                             <TableCell><Link to={`/community/post/${post.board_id}-${post.title}`}>{post.title}</Link></TableCell>
-                                            <TableCell>{post.author}</TableCell>
+                                            <TableCell>{post.author.userEmail}</TableCell>
                                             <TableCell>{post.createdAt}</TableCell>
                                             <TableCell>{post.viewCount}</TableCell>
                                         </TableRow>
