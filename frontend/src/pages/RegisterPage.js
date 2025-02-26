@@ -1,5 +1,5 @@
 import React, { useState } from 'react'
-import { Container, Box, TextField, Button, Typography, Snackbar, Alert } from '@mui/material'
+import { Container, Box, TextField, Button, Typography, Alert } from '@mui/material'
 import { useNavigate } from 'react-router-dom'
 import axios from 'axios'
 
@@ -12,11 +12,6 @@ export default function SignUpPage() {
         message: '',       // 표시할 메시지
         severity: 'info'   // Alert의 상태 (success, error, warning, info)
     })
-
-    // Snackbar 닫기 핸들러
-    const handleCloseSnackbar = () => {
-        setSnackbarData((prev) => ({ ...prev, open: false }))
-    }
 
     // 회원가입 폼 제출 함수
     const handleSignUp = async (event) => {
@@ -83,10 +78,20 @@ export default function SignUpPage() {
                     borderRadius: 2
                 }}
             >
-                {/* 페이지 타이틀 */}
+
                 <Typography variant="h4" align="center" sx={{ mb: 3 }}>
                     회원가입
                 </Typography>
+
+                {/* 알림 메시지를 여기로 이동 */}
+                {snackbarData.open && (
+                    <Alert
+                        severity={snackbarData.severity}
+                        sx={{ width: '100%', mb: 2 }}
+                    >
+                        {snackbarData.message}
+                    </Alert>
+                )}
 
                 {/* username 입력 필드 */}
                 <TextField
@@ -134,22 +139,6 @@ export default function SignUpPage() {
                     가입하기
                 </Button>
             </Box>
-
-            {/* 회원가입 성공/실패 시 메시지 표시를 위한 Snackbar */}
-            <Snackbar
-                open={snackbarData.open}
-                autoHideDuration={3000}
-                onClose={handleCloseSnackbar}
-                anchorOrigin={{ vertical: 'top', horizontal: 'center' }}
-            >
-                <Alert
-                    onClose={handleCloseSnackbar}
-                    severity={snackbarData.severity}
-                    sx={{ width: '100%' }}
-                >
-                    {snackbarData.message}
-                </Alert>
-            </Snackbar>
         </Container>
     )
 }

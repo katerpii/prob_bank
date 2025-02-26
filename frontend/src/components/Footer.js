@@ -8,8 +8,8 @@ export default function Footer() {
                 position: 'fixed', 
                 bottom: 0, 
                 width: '100%', 
-                bgcolor: 'primary.main', 
-                color: 'white', 
+                bgcolor: '#f5f5f5', 
+                color: 'black', 
                 py: 2 
             }}
         >

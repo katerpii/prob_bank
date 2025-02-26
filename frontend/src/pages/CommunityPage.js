@@ -3,9 +3,12 @@ import axios from 'axios'
 import { Box, Container, Grid, Typography, Button, TextField, Paper, Table, TableBody, TableCell, TableContainer, TableHead, TableRow } from '@mui/material'
 import { Search } from '@mui/icons-material'
 import { Link } from 'react-router-dom'
-// import useUserStore from '../store/useUserStore'
+import useUserStore from '../store/useUserStore'
 
 export default function CommunityPage() {
+    const user = useUserStore((state) => state.user)  // useUserStore에서 user 정보 가져오기
+
+    // 백엔드로부터 받아오는 post 형식을 지정하는 state
     const [posts, setPosts] = useState([{
         board_id: 0,
         title: '',
@@ -14,7 +17,8 @@ export default function CommunityPage() {
         viewCount: 0,
         createdAt: 0
     }])
-
+    // 백엔드로부터 커뮤니티 전체의 게시글을 받아옴
+    // 가장 첫번째 data를 우선적으로 posts state에 설정
     useEffect(() => {
         axios.get('http://localhost:3030/community', { withCredentials: true })
             .then(response => { setPosts(response.data) })
@@ -22,6 +26,7 @@ export default function CommunityPage() {
     }, [])
 
     return (
+        // 전체 페이지
         <Box 
             sx={{ 
                 flexGrow: 1,
@@ -29,23 +34,24 @@ export default function CommunityPage() {
                 display: 'flex',
                 flexDirection: 'column',
                 justifyContent: 'center',
-                backgroundColor: '#f5f5f5'
+                backgroundColor: 'white'
             }}
         >
+            {/* 실제 컨텐츠들이 들어가는 영역 */}
             <Container maxWidth="lg" sx={{ py: 5 }}>
                 <Grid container spacing={3}>
                     {/* 왼쪽 영역 (사이드 컨텐츠) */}
-                    <Grid item xs={12} md={4}>
+                    <Grid item xs={12} md={4} sx={{ backgroundColor: '#f5f5f5', padding: 2 }}>
                         <Typography variant="h5" sx={{ fontWeight: 'bold', mb: 2 }}>
                             UserProfile
                         </Typography>
                         <Typography variant="body2">
-                            userName
+                            {user?.username || 'Guest'}  {/* user가 있으면 username 표시, 없으면 'Guest' 표시 */}
                         </Typography>
                     </Grid>
 
                     {/* 오른쪽 메인 컨텐츠 영역 */}
-                    <Grid item xs={12} md={8}>
+                    <Grid item xs={12} md={8} sx={{ backgroundColor: '#f5f5f5', padding: 2 }}>
                         {/* 상단 액션 바 */}
                         <Box sx={{ 
                             display: 'flex', 
@@ -84,6 +90,7 @@ export default function CommunityPage() {
                                         <TableCell> 조회수 </TableCell>
                                     </TableRow>
                                 </TableHead>
+                                {/* 백엔드로부터 posts data를 받아 board_id를 키로 한개씩 반환 */}
                                 <TableBody>
                                     {posts.map((post) => (
                                         <TableRow 
@@ -95,7 +102,11 @@ export default function CommunityPage() {
                                                 }
                                             }}
                                         >
-                                            <TableCell><Link to={`/community/post/${post.board_id}-${post.title}`}>{post.title}</Link></TableCell>
+                                            <TableCell>
+                                                <Link to={`/community/post/${post.board_id}-${post.title.replace(/\s+/g, '-')}`}>
+                                                    {post.title}
+                                                </Link>
+                                            </TableCell>
                                             <TableCell>{post.author.userEmail}</TableCell>
                                             <TableCell>{post.createdAt}</TableCell>
                                             <TableCell>{post.viewCount}</TableCell>

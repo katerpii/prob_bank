@@ -1,19 +1,35 @@
-import { useState } from 'react'
+// 글 작성&수정 페이지
+import { useState, useEffect } from 'react'
 import { Button, Container, Card, Alert, TextField, Typography, Box, Stack, Grid } from '@mui/material'
-import { useNavigate } from 'react-router-dom'
+import { useNavigate, useLocation } from 'react-router-dom'
 import axios from 'axios'
 
 export default function WritePostPage() {
     const navigate = useNavigate()
+    const location = useLocation()
+    const isEditMode = location.pathname === '/community/edit/post'
 
     const [alertMessage, setAlertMessage] = useState('')
     const [errorMessage, setErrorMessage] = useState('')
 
     const [post, setPost] = useState({
+        board_id: 0,
         title: '',
         content: '',
         author: '',
     })
+
+    useEffect(() => {
+        if (isEditMode && location.state?.post) {
+            const editPost = location.state.post;
+            setPost({ // DeBug: CheckPostData
+                board_id: editPost.board_id,
+                title: editPost.title,
+                content: editPost.content,
+                author: editPost.author
+            });
+        }
+    }, [isEditMode, location.state])
 
     const handleChange = (e) => {
         const { name, value } = e.target
@@ -22,11 +38,19 @@ export default function WritePostPage() {
 
     const handleSubmit = async () => {
         try {
-            await axios.post('http://localhost:3030/community/addpost', post, { withCredentials: true })
-            setAlertMessage('게시글이 작성되었습니다!')
+            if (isEditMode) {
+                if (!post.board_id) {
+                    throw new Error('게시글 ID가 없습니다.')
+                }
+                await axios.put(`http://localhost:3030/community/updatepost/${post.board_id}`, post, { withCredentials: true })
+                setAlertMessage('게시글이 수정되었습니다!')
+            } else {
+                await axios.post('http://localhost:3030/community/addpost', post, { withCredentials: true })
+                setAlertMessage('게시글이 작성되었습니다!')
+            }
             navigate(-1)
         } catch (error) {
-            setErrorMessage('게시글 작성에 실패했습니다.')
+            setErrorMessage(isEditMode ? '게시글 수정에 실패했습니다.' : '게시글 작성에 실패했습니다.')
             console.error(error)
         }
     }
@@ -68,7 +92,7 @@ export default function WritePostPage() {
                 <Grid item xs={12} md={8}>
                     <Card sx={{ p: 4 }}>
                         <Typography variant="h4" gutterBottom>
-                            글쓰기
+                            {isEditMode ? '글 수정하기' : '글쓰기'}
                         </Typography>
 
                         <Box component="form" onSubmit={handleSubmit} sx={{ display: 'flex', flexDirection: 'column', gap: 2 }}>
@@ -78,7 +102,7 @@ export default function WritePostPage() {
                                 variant="outlined"
                                 fullWidth
                                 name="title"
-                                value={post.title}
+                                value={post.title || ''}
                                 onChange={handleChange}
                                 required
                             />
@@ -91,7 +115,7 @@ export default function WritePostPage() {
                                 name="content"
                                 multiline
                                 rows={8}
-                                value={post.content}
+                                value={post.content || ''}
                                 onChange={handleChange}
                                 required
                             />
@@ -102,7 +126,7 @@ export default function WritePostPage() {
                                     취소
                                 </Button>
                                 <Button variant="contained" color="primary" onClick={handleSubmit}>
-                                    작성
+                                    {isEditMode ? '수정' : '작성'}
                                 </Button>
                             </Stack>
                         </Box>

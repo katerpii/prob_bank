@@ -1,5 +1,5 @@
 import React, { useState } from 'react'
-import { Container, Box, TextField, Button, Typography, Snackbar, Alert, Divider } from '@mui/material'
+import { Container, Box, TextField, Button, Typography, Alert, Divider } from '@mui/material'
 import { Link, useNavigate } from 'react-router-dom'
 import axios from 'axios'
 import useAuthStore from '../store/useAuthStore'
@@ -18,11 +18,6 @@ export default function LoginPage() {
         message: '',       // 표시할 메시지
         severity: 'info'   // Alert의 상태 (success, error, warning, info)
     })
-
-    // Snackbar 닫기 핸들러
-    const handleCloseSnackbar = () => {
-        setSnackbarData((prev) => ({ ...prev, open: false }))
-    }
 
     // 로그인 폼 제출 함수
     const handleSignIn = async (event) => {
@@ -96,10 +91,20 @@ export default function LoginPage() {
                     borderRadius: 2
                 }}
             >
-                {/* 제목(Title) 대신 MUI Typography 사용 */}
+
                 <Typography variant="h4" align="center" sx={{ mb: 3 }}>
                     로그인
                 </Typography>
+
+                {/* 알림 메시지를 여기로 이동 */}
+                {snackbarData.open && (
+                    <Alert
+                        severity={snackbarData.severity}
+                        sx={{ width: '100%', mb: 2 }}
+                    >
+                        {snackbarData.message}
+                    </Alert>
+                )}
 
                 {/* username 입력필드 */}
                 <TextField
@@ -162,22 +167,6 @@ export default function LoginPage() {
                     회원가입
                 </Button>
             </Box>
-
-            {/* MUI Snackbar & Alert: 로그인 성공/실패 메시지 표시 */}
-            <Snackbar
-                open={snackbarData.open}
-                autoHideDuration={3000}
-                onClose={handleCloseSnackbar}
-                anchorOrigin={{ vertical: 'top', horizontal: 'center' }}
-            >
-                <Alert
-                    onClose={handleCloseSnackbar}
-                    severity={snackbarData.severity}
-                    sx={{ width: '100%' }}
-                >
-                    {snackbarData.message}
-                </Alert>
-            </Snackbar>
         </Container>
     )
 }

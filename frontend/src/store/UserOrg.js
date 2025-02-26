@@ -1,51 +1,79 @@
-// src/store/UserOrg.js
 import React from 'react'
-import { Box, Typography, Avatar, Link } from '@mui/material'
-import { useSession } from '@toolpad/core/useSession'
+import { Box, Stack, Typography, Avatar, Divider, Button } from '@mui/material'
+import { AccountPreview, AccountPopoverFooter, SignOutButton } from '@toolpad/core/Account'
+import { useNavigate } from 'react-router-dom'
+import useAuthStore from './useAuthStore'
+import useUserStore from './useUserStore'
 
-/*
-CustomSession 예시 구조:
-    {
-    user: { name, email, image },
-    org: { name, url, logo }
-    }
-*/
+export function UserOrg() {
+    const navigate = useNavigate()
+    const { logout } = useAuthStore()
+    const { clearUser } = useUserStore()
 
-const demoSession: CustomSession = {
-  user: {
-    name: 'Bharat Kashyap',
-    email: 'bharat@mui.com',
-    image: 'https://avatars.githubusercontent.com/u/19550456'
-  },
-  org: {
-    name: 'MUI Inc.',
-    url: 'https://mui.com',
-    logo: 'https://mui.com/static/logo.svg'
-  }
-}
-
-function UserOrg() {
+    // 실제 세션 데이터를 사용할 경우 (현재는 주석 처리)
+    /*
     const session = useSession()
+    const currentSession = session
+    */
 
-    // 세션이나 조직 정보가 없으면 아무것도 렌더링하지 않습니다.
-    if (!session || !session.org) return null
+    // 데모 세션 데이터
+    const demoSession = {
+        user: {
+            name: "데모 사용자",
+            email: "demo@example.com",
+            image: "https://via.placeholder.com/150"
+        }
+    }
+    const currentSession = demoSession
 
-    const { org } = session
+    // 로그인되지 않은 경우 처리
+    if (!currentSession?.user) {
+        return (
+            <Stack spacing={2} sx={{ p: 2 }}>
+                <Typography>로그인이 필요합니다</Typography>
+                <Button 
+                    variant="contained" 
+                    onClick={() => navigate('/login')}
+                    fullWidth
+                >
+                    로그인
+                </Button>
+            </Stack>
+        )
+    }
 
+    // 로그아웃 처리
+    const handleSignOut = () => {
+        logout()
+        clearUser()
+        navigate('/')
+    }
+
+    // 프로필 표시
     return (
-        <Box sx={{ display: 'flex', alignItems: 'center', p: 2 }}>
-            {/* 조직 로고 */}
-            <Avatar src={org.logo} alt={org.name} sx={{ mr: 2 }} />
-            <Box>
-                {/* 조직명 */}
-                <Typography variant="subtitle1">{org.name}</Typography>
-                {/* 조직 URL을 링크로 표시 */}
-                <Link href={org.url} target="_blank" rel="noopener" underline="hover">
-                    {org.url}
-                </Link>
-            </Box>
-        </Box>
+        <Stack>
+            <AccountPreview variant="expanded" />
+            <Stack mb={1}>
+                <Box display="flex" justifyContent="center" alignItems="center" gap={2}>
+                    <Avatar
+                        src={currentSession.user.image}
+                        alt={currentSession.user.name}
+                        sx={{ width: 27, height: 24 }}
+                    />
+                    <Stack>
+                        <Typography variant="caption" fontWeight="bolder">
+                            {currentSession.user.name}
+                        </Typography>
+                        <Typography variant="caption">
+                            {currentSession.user.email}
+                        </Typography>
+                    </Stack>
+                </Box>
+            </Stack>
+            <Divider />
+            <AccountPopoverFooter>
+                <SignOutButton onClick={handleSignOut} />
+            </AccountPopoverFooter>
+        </Stack>
     )
 }
-
-export { UserOrg }

@@ -12,6 +12,7 @@ export default function ViewPostPage() {
     const [showModal, setShowModal] = useState(false) // 모달 상태
     const [errorMessage, setErrorMessage] = useState('')
     const [alertMessage, setAlertMessage] = useState('')
+    const [author, setAuthor] = useState('')
 
     const [post, setPost] = useState({
         board_id: 0,
@@ -31,6 +32,10 @@ export default function ViewPostPage() {
                 console.log(error)
                 setErrorMessage('게시글을 불러오는 데 실패했습니다.')
             })
+        axios
+            .get('http://localhost:3030/auth/check', { withCredentials: true })
+            .then(res => setAuthor(res.data.email))
+            .catch(error => console.log(error))
     }, [postId])
 
     const handleDelete = async () => {
@@ -67,12 +72,25 @@ export default function ViewPostPage() {
 
                 {/* 버튼 영역 */}
                 <Stack direction="row" spacing={2} justifyContent="flex-end">
-                    <Button variant="outlined" color="secondary" onClick={() => navigate(-1)}>
+                    <Button variant="contained" color="secondary" onClick={() => navigate(-1)}>
                         뒤로가기
                     </Button>
-                    <Button variant="contained" color="error" onClick={() => setShowModal(true)}>
-                        삭제
-                    </Button>
+                    {/* {author === post.author && ( */}
+                        <>
+                            <Button 
+                                variant="contained" 
+                                color="primary" 
+                                onClick={() => navigate(`/community/edit/post`, { 
+                                    state: { post: post }
+                                })}
+                            >
+                                수정
+                            </Button>
+                            <Button variant="contained" color="error" onClick={() => setShowModal(true)}>
+                                삭제
+                            </Button>
+                        </>
+                    {/* )} */}
                 </Stack>
             </Card>
 
