@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react'
 import { useParams, useNavigate } from 'react-router-dom'
 import axios from 'axios'
-import { Card, Button, Dialog, DialogActions, DialogContent, DialogTitle, Alert, Typography, Box, Stack } from '@mui/material'
+import { Card, Button, Dialog, DialogActions, DialogContent, DialogTitle, Alert, Typography, Box, Stack, Container, Divider, Paper, Grid } from '@mui/material'
 import CheckIcon from '@mui/icons-material/Check'
 import useFormatDate from '../hooks/useFromDate' // useFormatDate 경로 확인
 
@@ -54,71 +54,135 @@ export default function ViewPostPage() {
     }
 
     return (
-        // 전체 페이지 컨테이너
-        <Box sx={{ maxWidth: 800, margin: 'auto', py: 5 }}>
-            {/* 게시글 카드 섹션 */}
-            <Card sx={{ p: 4, minHeight: '50vh', minWidth: '300px' }}>
-                {/* 게시글 제목 */}
-                <Typography variant="h4" gutterBottom>
-                    {post.title}
-                </Typography>
+        <Box sx={{ width: '100%', bgcolor: '#f5f5f5' }}>
+            <Container maxWidth="lg" sx={{ py: 4 }}>
+                <Grid container spacing={3}>
+                    {/* 메인 컨텐츠 영역 */}
+                    <Grid item xs={12} md={8}>
+                        <Paper elevation={1} sx={{ borderRadius: 2, overflow: 'hidden' }}>
+                            {/* 게시글 헤더 */}
+                            <Box sx={{ p: 3, bgcolor: 'white' }}>
+                                <Typography variant="h4" gutterBottom>
+                                    {post.title}
+                                </Typography>
+                                <Stack 
+                                    direction="row" 
+                                    spacing={2} 
+                                    divider={<Divider orientation="vertical" flexItem />}
+                                    sx={{ color: 'text.secondary', fontSize: '0.875rem' }}
+                                >
+                                    <Typography variant="body2">작성자: {post.author}</Typography>
+                                    <Typography variant="body2">작성일: {useFormatDate(post.createdAt)}</Typography>
+                                    <Typography variant="body2">조회수: {post.viewCount}</Typography>
+                                    <Typography variant="body2">좋아요: {post.likeCount}</Typography>
+                                </Stack>
+                            </Box>
 
-                {/* 게시글 메타 정보 (작성자, 작성일, 조회수, 좋아요) */}
-                <Stack direction="row" spacing={2} sx={{ mb: 2, color: 'text.secondary' }}>
-                    <Typography>작성자: {post.author}</Typography>
-                    <Typography>작성일: {useFormatDate(post.createdAt)}</Typography>
-                    <Typography>조회수: {post.viewCount}</Typography>
-                    <Typography>좋아요: {post.likeCount}</Typography>
-                </Stack>
+                            <Divider />
 
-                {/* 오류 메시지 표시 영역 */}
-                {errorMessage && <Alert severity="error" sx={{ mb: 2 }}>{errorMessage}</Alert>}
+                            {/* 게시글 본문 */}
+                            <Box sx={{ p: 3, bgcolor: 'white', minHeight: '300px' }}>
+                                {errorMessage && (
+                                    <Alert severity="error" sx={{ mb: 2 }}>
+                                        {errorMessage}
+                                    </Alert>
+                                )}
+                                <Typography 
+                                    variant="body1" 
+                                    sx={{ 
+                                        whiteSpace: 'pre-wrap',
+                                        wordBreak: 'break-word',
+                                        lineHeight: 1.8
+                                    }}
+                                >
+                                    {post.content}
+                                </Typography>
+                            </Box>
 
-                {/* 게시글 본문 내용 */}
-                <Typography variant="body1" sx={{ mb: 3 }}>
-                    {post.content}
-                </Typography>
+                            <Divider />
 
-                {/* 작업 버튼 영역 (뒤로가기, 수정, 삭제) */}
-                <Stack direction="row" spacing={2} justifyContent="flex-end">
-                    <Button variant="contained" color="secondary" onClick={() => navigate(-1)}>
-                        뒤로가기
-                    </Button>
-                    {/* {author === post.author && ( */}
-                        <>
-                            <Button 
-                                variant="contained" 
-                                color="primary" 
-                                onClick={() => {
-                                    console.log("전달하려는 board_id: ", post.board_id)
-                                    navigate(`/community/edit/post/${post.board_id}-${post.title.replace(/\s+/g, '-')}`, { state: {post: post} })
-                                }}
+                            {/* 작업 버튼 영역 */}
+                            <Box sx={{ p: 2, bgcolor: 'white' }}>
+                                <Stack direction="row" spacing={2} justifyContent="flex-end">
+                                    <Button 
+                                        variant="contained" 
+                                        color="secondary" 
+                                        onClick={() => navigate(-1)}
+                                    >
+                                        뒤로가기
+                                    </Button>
+                                    {/* {author === post.author && ( */}
+                                    <>
+                                        <Button 
+                                            variant="contained" 
+                                            color="primary" 
+                                            onClick={() => {
+                                                console.log("전달하려는 board_id: ", post.board_id)
+                                                navigate(`/community/edit/post/${post.board_id}-${post.title.replace(/\s+/g, '-')}`, { state: {post: post} })
+                                            }}
+                                        >
+                                            수정
+                                        </Button>
+                                        <Button 
+                                            variant="contained" 
+                                            color="error" 
+                                            onClick={() => setShowModal(true)}
+                                        >
+                                            삭제
+                                        </Button>
+                                    </>
+                                    {/* )} */}
+                                </Stack>
+                            </Box>
+                        </Paper>
+
+                        {/* 성공 메시지 알림 */}
+                        {alertMessage && (
+                            <Alert 
+                                icon={<CheckIcon fontSize="inherit" />} 
+                                severity="success" 
+                                sx={{ mt: 2 }}
                             >
-                                수정
-                            </Button>
-                            <Button variant="contained" color="error" onClick={() => setShowModal(true)}>
-                                삭제
-                            </Button>
-                        </>
-                    {/* )} */}
-                </Stack>
-            </Card>
+                                {alertMessage}
+                            </Alert>
+                        )}
+                    </Grid>
 
-            {/* 성공 메시지 알림 영역 */}
-            {alertMessage && (
-                <Alert icon={<CheckIcon fontSize="inherit" />} severity="success" sx={{ mt: 2 }}>
-                    {alertMessage}
-                </Alert>
-            )}
+                    {/* 사이드바 영역 */}
+                    <Grid item xs={12} md={4}>
+                        <Paper 
+                            elevation={1} 
+                            sx={{ 
+                                p: 3, 
+                                borderRadius: 2,
+                                bgcolor: 'white' 
+                            }}
+                        >
+                            <Typography variant="h6" gutterBottom>
+                                관련 게시글
+                            </Typography>
+                            <Typography variant="body2" color="text.secondary">
+                                추천 게시글 영역
+                            </Typography>
+                        </Paper>
+                    </Grid>
+                </Grid>
+            </Container>
 
-            {/* 삭제 확인 다이얼로그 모달 */}
-            <Dialog open={showModal} onClose={() => setShowModal(false)}>
+            {/* 삭제 확인 다이얼로그 */}
+            <Dialog 
+                open={showModal} 
+                onClose={() => setShowModal(false)}
+                PaperProps={{
+                    sx: { borderRadius: 2 }
+                }}
+            >
                 <DialogTitle>게시글 삭제</DialogTitle>
                 <DialogContent>
                     <Typography>정말 게시글을 삭제하시겠습니까?</Typography>
                 </DialogContent>
                 <DialogActions>
-                    <Button onClick={() => setShowModal(false)} color="secondary">
+                    <Button onClick={() => setShowModal(false)} color="secondary" variant="contained">
                         취소
                     </Button>
                     <Button onClick={handleDelete} color="error" variant="contained">

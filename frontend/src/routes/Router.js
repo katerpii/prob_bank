@@ -6,6 +6,7 @@ import RegisterPage from '../pages/RegisterPage'
 import CommunityPage from '../pages/CommunityPage'
 import ViewPostDetailPage from '../pages/ViewPostDetailPage'
 import WritePostPage from '../pages/WritePostPage'
+import AlgorithmPage from '../pages/AlgorithmPage'
 import NotFound from '../pages/NotFound'
 
 export default function Router() { // path에 따른 Page Routing
@@ -23,6 +24,10 @@ export default function Router() { // path에 따른 Page Routing
             <Route path="/community/post/:IdAndTitle" element={<ViewPostDetailPage />} />
             <Route path="/community/new/post" element={<WritePostPage />} />
             <Route path="/community/edit/post/:IdAndTitle" element={<WritePostPage />} />
+
+            {/* 문제 관련 */}
+            <Route path="/algorithm" element={<AlgorithmPage />} />
+            {/* <Route path="/algorithm/challenge/new" element={} /> */}
 
             {/* 404 페이지 */}
             <Route path="*" element={<NotFound />} />

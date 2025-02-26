@@ -2,5 +2,16 @@
 .App {
     display: flex;
     flex-direction: column;
+    min-height: 100vh;
+}
+
+.main-content {
     flex: 1;
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    min-height: calc(100vh - 64px - 56px); /* Header(64px)와 Footer(56px) 높이를 제외한 전체 높이 */
+    padding-top: 64px; /* Header 높이만큼 패딩 */
+    box-sizing: border-box;
+    position: relative;
 }

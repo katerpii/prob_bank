@@ -11,5 +11,4 @@ public class AddProblemDto {
     private String title;
     private String description;
     private String type;
-    
 }

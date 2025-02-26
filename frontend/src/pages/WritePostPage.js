@@ -63,14 +63,14 @@ export default function WritePostPage() {
 
     return (
         // 전체 페이지 컨테이너
-        <Container sx={{ mt: 12, py: 5 }}> {/* mt: 12 (theme spacing 단위, 보통 8px 기준 -> 96px)로 조정 */}
-            {/* Alert 위치: AppBar 아래 빈 공간 (예: 80px) */}
+        <Container sx={{ py: 4 }}> 
+            {/* Alert 메시지 */}
             {alertMessage && (
                 <Alert
                     severity="success"
                     sx={{
                         position: 'fixed',
-                        top: 80, // AppBar와 빈 공간을 고려한 위치
+                        top: '80px',
                         left: '50%',
                         transform: 'translateX(-50%)',
                         zIndex: 1300,
@@ -84,7 +84,7 @@ export default function WritePostPage() {
                     severity="error"
                     sx={{
                         position: 'fixed',
-                        top: 80, // 동일하게 AppBar 아래에 배치
+                        top: '80px',
                         left: '50%',
                         transform: 'translateX(-50%)',
                         zIndex: 1300,
