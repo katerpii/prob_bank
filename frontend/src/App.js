@@ -13,8 +13,9 @@ function App() {
     return (
         <div className="App">
             <Header />
-            {/* 중앙(본문) 영역에 실제 라우트가 표시됨 */}
+            <main className="main-content">
                 <Routes />
+            </main>
             <Footer />
         </div>
     )

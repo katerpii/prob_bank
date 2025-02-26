@@ -5,12 +5,12 @@ export default function Footer() {
         <Box 
             component="footer" 
             sx={{ 
-                position: 'fixed', 
-                bottom: 0, 
-                width: '100%', 
-                bgcolor: '#f5f5f5', 
-                color: 'black', 
-                py: 2 
+                width: '100%',
+                bgcolor: '#f5f5f5',
+                color: 'black',
+                py: 2,
+                height: '56px',
+                boxSizing: 'border-box'
             }}
         >
             <Container maxWidth="lg">

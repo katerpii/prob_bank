@@ -29,16 +29,13 @@ export default function CommunityPage() {
         // 전체 페이지
         <Box 
             sx={{ 
-                flexGrow: 1,
-                minHeight: 'calc(100vh - 64px - 56px)',
-                display: 'flex',
-                flexDirection: 'column',
-                justifyContent: 'center',
+                flex: 1,
+                width: '100%',
                 backgroundColor: 'white'
             }}
         >
             {/* 실제 컨텐츠들이 들어가는 영역 */}
-            <Container maxWidth="lg" sx={{ py: 5 }}>
+            <Container maxWidth="lg" sx={{ py: 4 }}>
                 <Grid container spacing={3}>
                     {/* 왼쪽 영역 (사이드 컨텐츠) */}
                     <Grid item xs={12} md={4} sx={{ backgroundColor: '#f5f5f5', padding: 2 }}>
