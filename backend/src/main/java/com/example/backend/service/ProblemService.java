@@ -50,7 +50,7 @@ public class ProblemService {
     // -> 프론트에서 제출 폼 만드는 대로 컴파일 관련 api 보완 
     public boolean getAnswer(String code) {
         String command = "gcc -o test submit.c"; 
-        ProcessBuilder processBuilder = new ProcessBuilder("cmd.exe", "/c", command);
+        ProcessBuilder processBuilder = new ProcessBuilder("cmd.exe", "/c", command); // "/c":명령실행 후 cmd종료료
         processBuilder.directory(new File("C:\\Side_Project\\backend\\src\\main\\java\\com\\example\\submit\\"));
         try {
             Process process = processBuilder.start();
@@ -67,13 +67,27 @@ public class ProblemService {
                 // throw new InterruptedException();
                 return false;
             }
-        } catch(IOException e){
+        } catch(IOException e){ 
             e.printStackTrace();
             return false;
         } catch(InterruptedException error){
             error.printStackTrace();
             return false;
         }
+    }
+
+    public static Problem Optionalto(Optional<Problem> object){
+        return (Problem)object.orElse(null) ;   
+    }
+
+    public String deleteProblem(Integer id){
+        Optional<Problem> findDeletePost = problemRepository.findById(id);
+
+        Problem deleteProblem= Optionalto(findDeletePost);
+
+        problemRepository.delete(deleteProblem);
+
+        return "delete succescs";
     }
 
 }
