@@ -3,7 +3,7 @@ import { useParams, useNavigate } from 'react-router-dom'
 import axios from 'axios'
 import { Card, Button, Dialog, DialogActions, DialogContent, DialogTitle, Alert, Typography, Box, Stack, Container, Divider, Paper, Grid } from '@mui/material'
 import CheckIcon from '@mui/icons-material/Check'
-import useFormatDate from '../hooks/useFromDate' // useFormatDate 경로 확인
+import useFormatDate from '../../../../src copy/hooks/useFromDate' // useFormatDate 경로 확인
 
 export default function ViewPostPage() {
     // 상태 관리 및 라우터 훅 초기화

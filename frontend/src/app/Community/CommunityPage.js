@@ -3,7 +3,7 @@ import axios from 'axios'
 import { Box, Container, Grid, Typography, Button, TextField, Paper, Table, TableBody, TableCell, TableContainer, TableHead, TableRow } from '@mui/material'
 import { Search } from '@mui/icons-material'
 import { Link } from 'react-router-dom'
-import useUserStore from '../store/useUserStore'
+import useUserStore from '../../../src copy/store/useUserStore'
 
 export default function CommunityPage() {
     const user = useUserStore((state) => state.user)  // useUserStore에서 user 정보 가져오기

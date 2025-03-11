@@ -2,8 +2,8 @@ import React, { useState } from 'react'
 import { Container, Box, TextField, Button, Typography, Alert, Divider } from '@mui/material'
 import { Link, useNavigate } from 'react-router-dom'
 import axios from 'axios'
-import useAuthStore from '../store/useAuthStore'
-import useUserStore from '../store/useUserStore'
+import useAuthStore from '../../../src copy/store/useAuthStore'
+import useUserStore from '../../../src copy/store/useUserStore'
 
 export default function LoginPage() {
     // 라우터 네비게이션 훅 초기화
