@@ -65,13 +65,27 @@ public class ProblemService {
                 // throw new InterruptedException();
                 return false;
             }
-        } catch(IOException e){
+        } catch(IOException e){ 
             e.printStackTrace();
             return false;
         } catch(InterruptedException error){
             error.printStackTrace();
             return false;
         }
+    }
+
+    public static Problem Optionalto(Optional<Problem> object){
+        return (Problem)object.orElse(null) ;   
+    }
+
+    public String deleteProblem(Integer id){
+        Optional<Problem> findDeletePost = problemRepository.findById(id);
+
+        Problem deleteProblem= Optionalto(findDeletePost);
+
+        problemRepository.delete(deleteProblem);
+
+        return "delete succescs";
     }
 
 }

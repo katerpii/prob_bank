@@ -17,6 +17,7 @@ import jakarta.servlet.http.HttpSession;
 import lombok.AllArgsConstructor;
 
 import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 
 //import org.springframework.web.bind.annotation.RequestParam;
@@ -34,20 +35,20 @@ public class ProblemController {
     private final ProblemService problemService; //서비스 클래스 사용(정보가져옴)
     private final UserRepository userRepository;
     
-
-    @GetMapping("/list")
+    //전체문제조회
+    @GetMapping("/algorithm")
     public List<Problem> getProblemList(){
         List<Problem> problems=problemService.getProblemList();
         return problems;
     }
-
-    @GetMapping("/get/{id}")
+    //특정문제조회
+    @GetMapping("/algorithm/{id}")
     public Optional<Problem> getProblemindex(@PathVariable Integer id) {
         return problemService.getProblemId(id);
     }
 
     //문제추가
-    @PostMapping("/addproblem")
+    @PostMapping("/algorithm/addproblem")
     public ResponseEntity<?> addProblem (@RequestBody AddProblemDto problemform , HttpServletRequest request ){
         HttpSession session=request.getSession(false); //true->새로만듦 , false-> null ,세션객체반환
         String useremail =(String)session.getAttribute("user_email"); //로그인(set)
@@ -62,6 +63,24 @@ public class ProblemController {
 
     }
 
+
+    //문제삭제
+    @DeleteMapping("/algorithm/deleteproblem/{id}")
+    public ResponseEntity<?> deleteProblem(@PathVariable Integer id, HttpServletRequest request) {
+        HttpSession session = request.getSession(false); 
+        String useremail =(String)session.getAttribute("user_email"); 
+        User user= userRepository.findByUserEmail(useremail);
+
+        if(user.getRole()=="USER"){
+            return ResponseEntity.status(403).body(null);
+        } 
+
+        
+        String deleteResult = problemService.deleteProblem(id);
+        return ResponseEntity.ok(deleteResult);
+}
+
+
     @PostMapping("/problem/submit")
     public ResponseEntity<?> correctCompare(@RequestBody String code){
         try{
@@ -75,6 +94,7 @@ public class ProblemController {
         }
 
         boolean result = problemService.getAnswer(code);
+
         return ResponseEntity.ok().body("correct");
     }    
 }

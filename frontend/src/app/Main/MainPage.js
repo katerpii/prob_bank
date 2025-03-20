@@ -37,7 +37,7 @@ export default function MainPage() {
                             <Button variant="contained" color="primary" sx={{ mx: 1 }}>
                                 더 알아보기
                             </Button>
-                            <Button variant="outlined" color="secondary" sx={{ mx: 1 }}>
+                            <Button variant="contained" color="secondary" sx={{ mx: 1 }}>
                                 연락하기
                             </Button>
                         </Box>
