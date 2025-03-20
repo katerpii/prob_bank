@@ -5,7 +5,6 @@ import jakarta.servlet.http.HttpSession;
 import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.bind.annotation.CrossOrigin;
-import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 
@@ -32,17 +31,13 @@ public class UserController {
     @PostMapping("/login")
     public ResponseEntity<?> login(@RequestBody LoginRequestDto form, HttpServletRequest request){
         boolean isLoginSuccess = userService.loginProc(form);
+        if (!isLoginSuccess) return ResponseEntity.status(401).body("Login Failed");
+        HttpSession session = request.getSession(true);
+        session.setAttribute("user_email", form.getEmail()); 
+        session.setMaxInactiveInterval(1800);
 
-        if (isLoginSuccess){
-            HttpSession session = request.getSession(true);
-            session.setAttribute("user_email", form.getEmail()); 
-            session.setMaxInactiveInterval(1800);
-
-            User user = userRepository.findByUserEmail(form.getEmail());
-            return ResponseEntity.ok(user);
-        }
-        
-        return ResponseEntity.status(401).body("Login Failed");
+        User user = userRepository.findByUserEmail(form.getEmail());
+        return ResponseEntity.ok(user);
     }
 
     @PostMapping("/logout")

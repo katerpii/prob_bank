@@ -49,15 +49,13 @@ public class ProblemService {
     // 일단 문제 리스트 + 상세조회 완성해야됌 -> 테스트 문제 하나 DB 등록
     // -> 프론트에서 제출 폼 만드는 대로 컴파일 관련 api 보완 
     public boolean getAnswer(String code) {
-        String command = "gcc -o test submit.c"; 
-        ProcessBuilder processBuilder = new ProcessBuilder("cmd.exe", "/c", command);
-        processBuilder.directory(new File("C:\\Side_Project\\backend\\src\\main\\java\\com\\example\\submit\\"));
+        ProcessBuilder processBuilder = new ProcessBuilder("docker build . --tag submit", "docker run submit");
+        processBuilder.directory(new File("C:\\source\\"));
         try {
             Process process = processBuilder.start();
             // if (process == null){
             //     throw new IOException();
             // }
-            
             int exitCode = process.waitFor(); 
 
             if (exitCode == 0){
