@@ -84,7 +84,7 @@ public class ProblemController {
     @PostMapping("/problem/submit")
     public ResponseEntity<?> correctCompare(@RequestBody String code){
         try{
-            FileWriter submit = new FileWriter("C:\\source\\submit.c");
+            FileWriter submit = new FileWriter("C:\\Side_Project\\backend\\src\\main\\java\\com\\example\\submit\\submit.c");
             submit.write(code);
             submit.close();
         }
