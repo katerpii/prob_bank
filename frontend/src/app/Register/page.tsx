@@ -1,62 +1,70 @@
-import React, { useState } from 'react'
-import { Container, Box, TextField, Button, Typography, Alert } from '@mui/material'
-import { useNavigate } from 'react-router-dom'
-import axios from 'axios'
+'use client';
+
+import React, { useState, FormEvent } from 'react';
+import { Container, Box, TextField, Button, Typography, Alert } from '@mui/material';
+import { useRouter } from 'next/navigation';
+import axios from 'axios';
+
+interface SnackbarData {
+  open: boolean;
+  message: string;
+  severity: 'success' | 'error' | 'warning' | 'info';
+}
 
 export default function SignUpPage() {
-    const navigate = useNavigate()
+    const router = useRouter();
 
     // MUI Snackbar를 통한 메시지 관리를 위한 상태
-    const [snackbarData, setSnackbarData] = useState({
+    const [snackbarData, setSnackbarData] = useState<SnackbarData>({
         open: false,       // Snackbar 열림 여부
         message: '',       // 표시할 메시지
         severity: 'info'   // Alert의 상태 (success, error, warning, info)
-    })
+    });
 
     // 회원가입 폼 제출 함수
-    const handleSignUp = async (event) => {
-        event.preventDefault() // 폼 제출 시 페이지 리로드 방지
+    const handleSignUp = async (event: FormEvent<HTMLFormElement>) => {
+        event.preventDefault(); // 폼 제출 시 페이지 리로드 방지
 
         // FormData로 username, email, password 값 추출
-        const formData = new FormData(event.currentTarget)
-        const name = formData.get('name')
-        const email = formData.get('email')
-        const password = formData.get('password')
+        const formData = new FormData(event.currentTarget);
+        const name = formData.get('name') as string;
+        const email = formData.get('email') as string;
+        const password = formData.get('password') as string;
 
         try {
             const response = await axios.post(
                 'http://localhost:3030/join',
                 { name, email, password },
                 { withCredentials: true }
-            )
+            );
 
             if (response.status === 200) {
                 setSnackbarData({
                     open: true,
                     message: '회원가입 성공!',
                     severity: 'success'
-                })
+                });
 
                 // 2초 후 로그인 페이지로 이동
-                setTimeout(() => navigate('/login'), 2000)
+                setTimeout(() => router.push('/login'), 2000);
             } else {
                 // 서버에서 200이 아닌 응답을 받은 경우
                 setSnackbarData({
                     open: true,
                     message: '회원가입에 실패하였습니다.',
                     severity: 'error'
-                })
+                });
             }
         } catch (error) {
             // 에러 발생 시
-            console.error('Error:', error)
+            console.error('Error:', error);
             setSnackbarData({
                 open: true,
                 message: '회원가입에 실패하였습니다.',
                 severity: 'error'
-            })
+            });
         }
-    }
+    };
 
     return (
         <Container
@@ -140,5 +148,5 @@ export default function SignUpPage() {
                 </Button>
             </Box>
         </Container>
-    )
-}
+    );
+} 

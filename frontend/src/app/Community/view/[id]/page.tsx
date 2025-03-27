@@ -1,22 +1,46 @@
-import React, { useState, useEffect } from 'react'
-import { useParams, useNavigate } from 'react-router-dom'
-import axios from 'axios'
-import { Card, Button, Dialog, DialogActions, DialogContent, DialogTitle, Alert, Typography, Box, Stack, Container, Divider, Paper, Grid } from '@mui/material'
-import CheckIcon from '@mui/icons-material/Check'
-import useFormatDate from '../../../../src copy/hooks/useFromDate' // useFormatDate 경로 확인
+'use client';
+
+import React, { useState, useEffect } from 'react';
+import { useParams, useRouter } from 'next/navigation';
+import axios from 'axios';
+import { Button, Dialog, DialogActions, DialogContent, DialogTitle, Alert, Typography, Box, Stack, Container, Divider, Paper, Grid } from '@mui/material';
+import CheckIcon from '@mui/icons-material/Check';
+
+// 날짜 포맷팅 함수
+const useFormatDate = (timestamp: number): string => {
+  if (!timestamp) return '';
+  const date = new Date(timestamp);
+  return date.toLocaleDateString('ko-KR', {
+    year: 'numeric',
+    month: 'long',
+    day: 'numeric',
+    hour: '2-digit',
+    minute: '2-digit'
+  });
+};
+
+interface Post {
+  board_id: number;
+  title: string;
+  content: string;
+  author: string;
+  likeCount: number;
+  viewCount: number;
+  createdAt: number;
+}
 
 export default function ViewPostPage() {
     // 상태 관리 및 라우터 훅 초기화
-    const { IdAndTitle } = useParams()
-    const postId = IdAndTitle?.split('-')[0] || ''
-    const navigate = useNavigate()
-    const [showModal, setShowModal] = useState(false)
-    const [errorMessage, setErrorMessage] = useState('')
-    const [alertMessage, setAlertMessage] = useState('')
-    const [author, setAuthor] = useState('')
+    const params = useParams();
+    const postId = params?.id ? String(params.id).split('-')[0] : '';
+    const router = useRouter();
+    const [showModal, setShowModal] = useState(false);
+    const [errorMessage, setErrorMessage] = useState('');
+    const [alertMessage, setAlertMessage] = useState('');
+    const [currentUserEmail, setCurrentUserEmail] = useState('');
 
     // 게시글 데이터 상태 초기화
-    const [post, setPost] = useState({
+    const [post, setPost] = useState<Post>({
         board_id: 0,
         title: '',
         content: '',
@@ -24,7 +48,7 @@ export default function ViewPostPage() {
         likeCount: 0,
         viewCount: 0,
         createdAt: 0
-    })
+    });
 
     // 게시글 데이터 및 사용자 정보 불러오기
     useEffect(() => {
@@ -32,32 +56,33 @@ export default function ViewPostPage() {
             .get(`http://localhost:3030/community/${postId}`, { withCredentials: true })
             .then(res => setPost(res.data))
             .catch(error => {
-                console.log(error)
-                setErrorMessage('게시글을 불러오는 데 실패했습니다.')
-            })
+                console.log(error);
+                setErrorMessage('게시글을 불러오는 데 실패했습니다.');
+            });
         axios
             .get('http://localhost:3030/profile', { withCredentials: true })
-            .then(res => setAuthor(res.data.email))
-            .catch(error => console.log(error))
-    }, [postId])
+            .then(res => setCurrentUserEmail(res.data.email))
+            .catch(error => console.log(error));
+    }, [postId]);
 
     // 게시글 삭제 핸들러
     const handleDelete = async () => {
         try {
-            await axios.delete(`http://localhost:3030/community/deletepost/${postId}`, { withCredentials: true })
-            setAlertMessage('게시글이 삭제되었습니다.')
-            navigate(-1)
+            await axios.delete(`http://localhost:3030/community/deletepost/${postId}`, { withCredentials: true });
+            setAlertMessage('게시글이 삭제되었습니다.');
+            router.back();
         } catch (error) {
-            console.log(error)
-            setErrorMessage('게시글 삭제에 실패했습니다.')
+            console.log(error);
+            setErrorMessage('게시글 삭제에 실패했습니다.');
         }
-    }
+    };
 
     return (
         <Box sx={{ width: '100%', bgcolor: '#f5f5f5' }}>
             <Container maxWidth="lg" sx={{ py: 4 }}>
                 <Grid container spacing={3}>
                     {/* 메인 컨텐츠 영역 */}
+                    {/* @ts-expect-error MUI Grid 타입 정의 문제 */}
                     <Grid item xs={12} md={8}>
                         <Paper elevation={1} sx={{ borderRadius: 2, overflow: 'hidden' }}>
                             {/* 게시글 헤더 */}
@@ -107,18 +132,19 @@ export default function ViewPostPage() {
                                     <Button 
                                         variant="contained" 
                                         color="secondary" 
-                                        onClick={() => navigate(-1)}
+                                        onClick={() => router.back()}
                                     >
                                         뒤로가기
                                     </Button>
-                                    {/* {author === post.author && ( */}
+                                    {/* 본인 작성 글일 경우에만 수정/삭제 버튼 표시 */}
+                                    {currentUserEmail === post.author && (
                                     <>
                                         <Button 
                                             variant="contained" 
                                             color="primary" 
                                             onClick={() => {
-                                                console.log("전달하려는 board_id: ", post.board_id)
-                                                navigate(`/community/edit/post/${post.board_id}-${post.title.replace(/\s+/g, '-')}`, { state: {post: post} })
+                                                console.log("전달하려는 board_id: ", post.board_id);
+                                                router.push(`/community/edit/post/${post.board_id}-${post.title.replace(/\s+/g, '-')}`);
                                             }}
                                         >
                                             수정
@@ -131,7 +157,7 @@ export default function ViewPostPage() {
                                             삭제
                                         </Button>
                                     </>
-                                    {/* )} */}
+                                    )}
                                 </Stack>
                             </Box>
                         </Paper>
@@ -149,6 +175,7 @@ export default function ViewPostPage() {
                     </Grid>
 
                     {/* 사이드바 영역 */}
+                    {/* @ts-expect-error MUI Grid 타입 정의 문제 */}
                     <Grid item xs={12} md={4}>
                         <Paper 
                             elevation={1} 
@@ -191,5 +218,5 @@ export default function ViewPostPage() {
                 </DialogActions>
             </Dialog>
         </Box>
-    )
-}
+    );
+} 

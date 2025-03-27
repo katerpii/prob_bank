@@ -1,29 +1,53 @@
-import React, { useState, useEffect } from 'react'
-import axios from 'axios'
-import { Box, Container, Grid, Typography, Button, TextField, Paper, Table, TableBody, TableCell, TableContainer, TableHead, TableRow } from '@mui/material'
-import { Search } from '@mui/icons-material'
-import { Link } from 'react-router-dom'
-import useUserStore from '../../../src copy/store/useUserStore'
+'use client';
+
+import React, { useState, useEffect } from 'react';
+import axios from 'axios';
+import { Box, Container, Grid, Typography, Button, TextField, Paper, Table, TableBody, TableCell, TableContainer, TableHead, TableRow } from '@mui/material';
+import { Search } from '@mui/icons-material';
+import Link from 'next/link';
+
+interface Post {
+  board_id: number;
+  title: string;
+  author: {
+    userEmail: string;
+  };
+  likeCount: number;
+  viewCount: number;
+  createdAt: string;
+}
 
 export default function CommunityPage() {
-    const user = useUserStore((state) => state.user)  // useUserStore에서 user 정보 가져오기
-
     // 백엔드로부터 받아오는 post 형식을 지정하는 state
-    const [posts, setPosts] = useState([{
-        board_id: 0,
-        title: '',
-        author: '',
-        likeCount: 0,
-        viewCount: 0,
-        createdAt: 0
-    }])
+    const [posts, setPosts] = useState<Post[]>([]);
+    const [user, setUser] = useState<{ username: string } | null>(null);
+    
     // 백엔드로부터 커뮤니티 전체의 게시글을 받아옴
-    // 가장 첫번째 data를 우선적으로 posts state에 설정
     useEffect(() => {
-        axios.get('http://localhost:3030/community', { withCredentials: true })
-            .then(response => { setPosts(response.data) })
-            .catch(error => { console.error('게시글을 불러오는데 실패했습니다:', error) })
-    }, [])
+        // 사용자 정보 가져오기
+        const fetchUserData = async () => {
+            try {
+                const response = await axios.get('http://localhost:3030/user/profile', { withCredentials: true });
+                setUser(response.data);
+            } catch (error) {
+                console.error('사용자 정보를 불러오는데 실패했습니다:', error);
+                setUser(null);
+            }
+        };
+        
+        // 게시글 가져오기
+        const fetchPosts = async () => {
+            try {
+                const response = await axios.get('http://localhost:3030/community', { withCredentials: true });
+                setPosts(response.data);
+            } catch (error) {
+                console.error('게시글을 불러오는데 실패했습니다:', error);
+            }
+        };
+        
+        fetchUserData();
+        fetchPosts();
+    }, []);
 
     return (
         // 전체 페이지
@@ -38,6 +62,7 @@ export default function CommunityPage() {
             <Container maxWidth="lg" sx={{ py: 4 }}>
                 <Grid container spacing={3}>
                     {/* 왼쪽 영역 (사이드 컨텐츠) */}
+                    {/* @ts-expect-error MUI Grid 타입 정의 문제 */}
                     <Grid item xs={12} md={4} sx={{ backgroundColor: '#f5f5f5', padding: 2 }}>
                         <Typography variant="h5" sx={{ fontWeight: 'bold', mb: 2 }}>
                             UserProfile
@@ -48,6 +73,7 @@ export default function CommunityPage() {
                     </Grid>
 
                     {/* 오른쪽 메인 컨텐츠 영역 */}
+                    {/* @ts-expect-error MUI Grid 타입 정의 문제 */}
                     <Grid item xs={12} md={8} sx={{ backgroundColor: '#f5f5f5', padding: 2 }}>
                         {/* 상단 액션 바 */}
                         <Box sx={{ 
@@ -67,7 +93,7 @@ export default function CommunityPage() {
                             />
                             <Button 
                                 component={Link}
-                                to="/community/new/post"
+                                href="/community/new/post"
                                 variant="contained" 
                                 color="primary"
                                 sx={{ borderRadius: 1 }}
@@ -81,10 +107,10 @@ export default function CommunityPage() {
                             <Table>
                                 <TableHead>
                                     <TableRow>
-                                        <TableCell> 제목 </TableCell>
-                                        <TableCell> 작성자 </TableCell>
-                                        <TableCell> 작성일 </TableCell>
-                                        <TableCell> 조회수 </TableCell>
+                                        <TableCell>제목</TableCell>
+                                        <TableCell>작성자</TableCell>
+                                        <TableCell>작성일</TableCell>
+                                        <TableCell>조회수</TableCell>
                                     </TableRow>
                                 </TableHead>
                                 {/* 백엔드로부터 posts data를 받아 board_id를 키로 한개씩 반환 */}
@@ -100,7 +126,7 @@ export default function CommunityPage() {
                                             }}
                                         >
                                             <TableCell>
-                                                <Link to={`/community/post/${post.board_id}-${post.title.replace(/\s+/g, '-')}`}>
+                                                <Link href={`/community/post/${post.board_id}-${post.title.replace(/\s+/g, '-')}`}>
                                                     {post.title}
                                                 </Link>
                                             </TableCell>
@@ -116,5 +142,5 @@ export default function CommunityPage() {
                 </Grid>
             </Container>
         </Box>
-    )
-}
+    );
+} 

@@ -1,56 +1,55 @@
-import React, { useState } from 'react'
-import { Container, Box, TextField, Button, Typography, Alert, Divider } from '@mui/material'
-import { Link, useNavigate } from 'react-router-dom'
-import axios from 'axios'
-import useAuthStore from '../../../src copy/store/useAuthStore'
-import useUserStore from '../../../src copy/store/useUserStore'
+'use client';
+
+import React, { useState, FormEvent } from 'react';
+import { Container, Box, TextField, Button, Typography, Alert, Divider } from '@mui/material';
+import Link from 'next/link';
+import { useRouter } from 'next/navigation';
+import axios from 'axios';
+
+interface SnackbarData {
+  open: boolean;
+  message: string;
+  severity: 'success' | 'error' | 'warning' | 'info';
+}
 
 export default function LoginPage() {
     // 라우터 네비게이션 훅 초기화
-    const navigate = useNavigate()
-
-    // Zustand(React 상태 관리 라이브러리)에서 전역 상태 업데이트 함수를 가져옴
-    const { setLoggedIn } = useAuthStore.getState()
-    const { setUser } = useUserStore.getState()
+    const router = useRouter();
 
     // MUI Snackbar를 통한 메시지 관리를 위한 state
-    const [snackbarData, setSnackbarData] = useState({
+    const [snackbarData, setSnackbarData] = useState<SnackbarData>({
         open: false,       // Snackbar 열림 여부
         message: '',       // 표시할 메시지
         severity: 'info'   // Alert의 상태 (success, error, warning, info)
-    })
+    });
 
     // 로그인 폼 제출 핸들러
-    const handleSignIn = async (event) => {
-        event.preventDefault() // 폼 제출 시 페이지 리로드 방지
+    const handleSignIn = async (event: FormEvent<HTMLFormElement>) => {
+        event.preventDefault(); // 폼 제출 시 페이지 리로드 방지
 
         // FormData로 username, email, password 값 추출
-        const formData = new FormData(event.currentTarget)
-        const username = formData.get('username')
-        const email = formData.get('email')
-        const password = formData.get('password')
+        const formData = new FormData(event.currentTarget);
+        const username = formData.get('username') as string;
+        const email = formData.get('email') as string;
+        const password = formData.get('password') as string;
 
         try {
             const response = await axios.post(
                 'http://localhost:3030/login',
                 { username, email, password },
                 { withCredentials: true }
-            )
+            );
 
             if (response.status === 200) {
-                const user = response.data
-                setUser(user)         // 유저 정보 전역 상태 업데이트
-                setLoggedIn(true)     // 로그인 상태 true 설정
-
                 // 성공 메시지
                 setSnackbarData({
                     open: true,
                     message: '로그인 성공!',
                     severity: 'success'
-                })
+                });
 
                 // 2초 뒤 메인 페이지로 이동 (필요에 맞춰 시간 조절)
-                setTimeout(() => navigate('/'), 2000)
+                setTimeout(() => router.push('/'), 2000);
 
             } else {
                 // 실패 메시지
@@ -58,18 +57,18 @@ export default function LoginPage() {
                     open: true,
                     message: '로그인에 실패하였습니다.',
                     severity: 'error'
-                })
+                });
             }
         } catch (error) {
-            console.error('Login Error:', error)
+            console.error('Login Error:', error);
             // 실패 메시지
             setSnackbarData({
                 open: true,
                 message: '로그인에 실패하였습니다.',
                 severity: 'error'
-            })
+            });
         }
-    }
+    };
 
     return (
         // 전체 페이지 컨테이너
@@ -143,7 +142,7 @@ export default function LoginPage() {
                 {/* 회원가입 이동 링크 */}
                 <Button
                     component={Link}
-                    to="/join"
+                    href="/join"
                     variant="outlined"
                     color="info"
                     fullWidth
@@ -153,5 +152,5 @@ export default function LoginPage() {
                 </Button>
             </Box>
         </Container>
-    )
-}
+    );
+} 

@@ -1,31 +1,41 @@
-import { useState, useEffect } from 'react'
-import { Link } from 'react-router-dom'
-import { Box, Container, Grid, Paper, Typography, TextField, Button, Select, MenuItem, FormControl, InputLabel, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Card, CardContent } from '@mui/material'
-import axios from 'axios'
+'use client';
+
+import { useState, useEffect } from 'react';
+import Link from 'next/link';
+import { Box, Container, Grid, Paper, Typography, TextField, Button, Select, MenuItem, FormControl, InputLabel, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Card, CardContent } from '@mui/material';
+import axios from 'axios';
+
+interface Challenge {
+    id: number;
+    title: string;
+    solvedCount: number;
+    author: string;
+}
 
 export default function AlgorithmPage() {
-    const [challenges, setChallenges] = useState([])
-    const [totalChallenges, setTotalChallenges] = useState(0)
-    const [sortOrder, setSortOrder] = useState('latest')
+    const [challenges, setChallenges] = useState<Challenge[]>([]);
+    const [totalChallenges, setTotalChallenges] = useState(0);
+    const [sortOrder, setSortOrder] = useState('latest');
 
     useEffect(() => {
         // API 호출 예시
         const ProblemList = async () => {
             try {
-                const response = await axios.get('http://localhost:3030/algorithm')
-                setChallenges(response.data.challenge)
-                setTotalChallenges(response.data.challenge.length) // 총 개수를 totalchallenges에 설정
+                const response = await axios.get('http://localhost:3030/algorithm');
+                setChallenges(response.data.challenge);
+                setTotalChallenges(response.data.challenge.length); // 총 개수를 totalchallenges에 설정
             } catch (error) {
-                console.error('문제 목록을 불러오는데 실패했습니다:', error)
+                console.error('문제 목록을 불러오는데 실패했습니다:', error);
             }
-        }
+        };
 
-        ProblemList()
-    }, [])
+        ProblemList();
+    }, []);
 
     return (
         <Container maxWidth="xl" sx={{ mt: 4 }}>
             <Grid container spacing={3}>
+                {/* @ts-expect-error MUI Grid 타입 정의 문제 */}
                 <Grid item xs={12} md={8}>
                     <Paper sx={{ p: 3 }}>
                         {/* 검색 및 필터 섹션 */}
@@ -37,6 +47,7 @@ export default function AlgorithmPage() {
                                 sx={{ mb: 2 }}
                             />
                             <Grid container spacing={2}>
+                                {/* @ts-expect-error MUI Grid 타입 정의 문제 */}
                                 <Grid item xs={12} sm={6}>
                                     <FormControl fullWidth>
                                         <InputLabel>난이도</InputLabel>
@@ -47,6 +58,7 @@ export default function AlgorithmPage() {
                                         </Select>
                                     </FormControl>
                                 </Grid>
+                                {/* @ts-expect-error MUI Grid 타입 정의 문제 */}
                                 <Grid item xs={12} sm={6}>
                                     <FormControl fullWidth>
                                         <InputLabel>풀이 여부</InputLabel>
@@ -100,6 +112,7 @@ export default function AlgorithmPage() {
                     </Paper>
                 </Grid>
 
+                {/* @ts-expect-error MUI Grid 타입 정의 문제 */}
                 <Grid item xs={12} md={4}>
                     {/* 문제 출제 카드 */}
                     <Card sx={{ mb: 3 }}>
@@ -112,7 +125,7 @@ export default function AlgorithmPage() {
                             </Typography>
                             <Button
                                 component={Link}
-                                to="/algorithm/challenges/new"
+                                href="/algorithm/challenges/new"
                                 variant="contained"
                                 fullWidth
                             >
@@ -133,5 +146,5 @@ export default function AlgorithmPage() {
                 </Grid>
             </Grid>
         </Container>
-    )
-}
+    );
+} 
